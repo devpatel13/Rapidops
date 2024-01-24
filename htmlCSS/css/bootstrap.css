@@ -1,0 +1,78 @@
+/* i {
+  color: #74c0fc;
+  background-color: darkblue;
+  padding: 3%;
+  margin: 10%;
+} */
+
+/* navbar */
+li .dropdown-item:hover{
+  background-color: #0d6efd;
+}
+.nav-item:hover{
+  background-color: #0d6efd;
+}
+
+/* container1 */
+#container1 {
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+#logo {
+  height: 1%;
+  width: 1%;
+  margin-right: 0.5%;
+}
+
+/* container2 */
+/* #container2 {
+  background-color: lightgrey;
+  padding: auto;
+  margin: 0%;
+  width: fit-content;
+} */
+
+/* container3 */
+#container3 {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+/* contaier4 */
+#container4 {
+  margin-bottom: 5%;
+}
+#images {
+  margin-bottom: 5%;
+}
+.imageHover:hover {
+  opacity: 0.5;
+}
+.hoverIcon {
+  position: absolute;
+  left: 20%;
+  top: 103%;
+  opacity: 0;
+}
+.hoverIcon:hover {
+  opacity: 1;
+}
+.imgHover {
+  position: relative;
+}
+
+/* container5 */
+
+#roadImg {
+  height: 500px;
+  opacity: 0.6;
+  border-radius: 0;
+}
+
+@media only screen and (max-width: 500px) {
+  form{
+    /* color: #0d6efd; */
+    width: 100%;
+    margin: 0;
+  }
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Exercise</title>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="md-5">
+      <nav class="navbar fixed-top navbar-expand-lg bg-body-secondary py-4">
+        <div class="container-fluid ps-5">
+          <img src="/img/logo.png" alt="" id="logo">
+          <a class="navbar-brand text-body-secondary" href="#">Stick</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-5">
+              <li class="nav-item dropdown-hover">
+                <a class="nav-link active" aria-current="page" href="#"
+                  >About Us</a
+                >
+              </li>
+              <li class="nav-item dropdown dropdown-hover">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Services
+                </a>
+                <ul class="dropdown-menu bg-body-secondary">
+                  <li class="dropdown-hover"><a class="dropdown-item" href="#">Service Main 1</a></li>
+                  <li><a class="dropdown-item dropdown-hover" href="#">Service Main 2</a></li>
+                  <!-- <li><hr class="dropdown-divider"></li> -->
+                  <li><a class="dropdown-item dropdown-hover" href="#">Service Main 3</a></li>
+                  <li><a class="dropdown-item dropdown-hover" href="#">Service Main 4</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown-hover">
+                <a class="nav-link" href="#">Blog</a>
+              </li>
+              <li class="nav-item dropdown-hover">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- container 1: Starting text -->
+
+    <div class="container text-center" id="container1">
+      <h1>Simple and pure design</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat sequi
+        obcaecati, repellat soluta doloremque quasi nemo repudiandae saepe nihil
+        perferendis tenetur cumque laudantium dolorem et harum, quod similique
+        ex officiis!
+      </p>
+    </div>
+
+    <!-- container 2: cards -->
+
+    <div
+      class="container-fluid text-center m-1 bg-body-secondary"
+      id="container2"
+    >
+      <div class="row">
+        <div class="col">
+          <div class="card mb-3 bg-body-secondary border-0 p-3">
+            <i
+              class="fa-sharp fa-solid fa-2x p-4 bg-info mx-auto fa-mobile"
+            ></i>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text text-body-secondary">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card mb-3 bg-body-secondary border-0 p-3">
+            <i
+              class="fa-sharp fa-solid fa-2x p-4 bg-info mx-auto fa-telegram"
+            ></i>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text text-body-secondary">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card mb-3 bg-body-secondary border-0 p-3">
+            <i
+              class="fa-sharp fa-solid fa-2x p-4 bg-info mx-auto fa-microphone-lines"
+            ></i>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text text-body-secondary">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- container 3: Text -->
+    <div class="container text-center" id="container3">
+      <h1>Showcase your work like a pro</h1>
+      <p>contact me if you like my work.</p>
+    </div>
+
+    <!-- container 4: Images -->
+    <div class="container text-center" id="images">
+      <div class="row gx-5">
+        <div class="col p-3 imageHover">
+          <i class="fa-solid fa-magnifying-glass hoverIcon"></i>
+          <i class="fa-solid fa-magnifying-glass hoverIcon"></i>
+          <img src="/img/pic1.png" class="imgHover" alt="" />
+        </div>
+        <div class="col p-3 imageHover"><img src="/img/pic2.png" alt="" /></div>
+        <div class="col p-3 imageHover"><img src="/img/pic3.png" alt="" /></div>
+      </div>
+      <div class="row gx-5">
+        <div class="col p-3 imageHover"><img src="/img/pic2.png" alt="" /></div>
+        <div class="col p-3 imageHover"><img src="/img/pic3.png" alt="" /></div>
+        <div class="col p-3 imageHover"><img src="/img/pic1.png" alt="" /></div>
+      </div>
+    </div>
+
+    <!-- container 5: Form -->
+
+    <div class="card text-bg-dark" id="details-form">
+      <img src="/img/road.png" class="card-img" id="roadImg" alt="..." />
+      <div class="card-img-overlay">
+        <form class="w-25 text-center mx-auto" >
+          <div class="mb-3 text-center">
+            <h1>Stay With Us</h1>
+          </div>
+          <div class="mb-3 text-center">
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Full Name"
+            />
+          </div>
+          <div class="mb-3 text-center">
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputPassword1"
+              placeholder="Email Address"
+            />
+          </div>
+          <div class="mb-3 text-center">
+            <div class="form-floating">
+              <textarea
+                class="form-control"
+                placeholder="Leave a comment here"
+                id="floatingTextarea2"
+                style="height: 100px"
+              ></textarea>
+              <label for="floatingTextarea2">Comments</label>
+            </div>
+          </div>
+          <div class="d-flex justify-content-start">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck1"
+            />
+            <label class="form-check-label" for="exampleCheck1"
+              >Check me out</label
+            >
+
+            <button type="submit" class="btn btn-primary ms-auto">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+      <ul class="nav justify-content-end py-3">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#"
+            ><i class="fa-brands fa-instagram fa-2x"> </i
+          ></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"
+            ><i class="fa-brands fa-facebook fa-2x"></i
+          ></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"
+            ><i class="fa-brands fa-twitter fa-2x"></i
+          ></a>
+        </li>
+      </ul>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/a8fd80bfd5.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
