@@ -30,7 +30,7 @@ function makePattern(num) {
     for (let j = 0; j < num; j++) {
       if (j == j_1 || j == j_2) {
         str += "*";
-      } else str += "_";
+      } else str += " ";
     }
     str += "\n";
   }

@@ -2,7 +2,7 @@
 
 function makePattern(num) {
   let str = "";
-  let mid = Math.floor(num / 2);
+  const mid = Math.floor(num / 2);
   let count = 0;
   let flag = true;
 

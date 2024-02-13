@@ -2,7 +2,6 @@
 
 function makePattern(num) {
   let str = "";
-  let last = num - 1;
   let count_row = 0;
   let flag = true;
   for (let i = 0; i < 2 * num - 1; i++) {
