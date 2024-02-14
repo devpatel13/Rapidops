@@ -4,6 +4,7 @@
 static_array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 function getFirstnElements(arr, num) {
   console.log(arr.slice(0, num));
-  console.log(arr.slice(num));
+  console.log(arr.slice(-num));
 }
-getFirstnElements(static_array, 3);
+
+getFirstnElements(static_array, +prompt("Enter a number"));

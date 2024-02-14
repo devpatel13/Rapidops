@@ -30,4 +30,7 @@ function aMinusb_array(arr1, arr2) {
   });
   return arr1;
 }
-console.log(aMinusb_array([0, 1, 2, 3], [3, 4, 5]));
+console.log(union_array([0, 2, 2, 3], [3, 4, 5]));
+console.log(intersection_array([0, 2, 3, 3], [3, 4, 5]));
+console.log(aMinusb_array([0, 2, 2, 3], [3, 4, 5]));
+console.log(aMinusb_array([3, 4, 5], [0, 2, 2, 3]));

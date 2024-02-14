@@ -9,3 +9,5 @@ function shuffle(arr) {
   }
   console.log(arr);
 }
+
+shuffle([1, 2, 3, 4, 5]);
