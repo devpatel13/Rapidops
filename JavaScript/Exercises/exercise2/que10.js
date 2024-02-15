@@ -33,7 +33,7 @@ function dateDiff(date1, date2) {
 
   ans.push(`Or ${Math.floor(year * 365 * 24)} hours`);
 
-  ans.push(`Or ${Math.floor(year * 365)} minutes`);
+  ans.push(`Or ${Math.floor(year * 365 * 24 * 60)} minutes`);
 
   return ans.join("\n");
 }

@@ -6,4 +6,16 @@ function unixToTime(sec) {
   let date = new Date(sec * 1000);
   return date;
 }
-console.log(unixToTime(1607518718));
+
+const options = {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+  timeZoneName: "short",
+  timeZone: "Asia/Kolkata",
+};
+console.log(unixToTime(1607518718).toLocaleString("en-IN", options));
