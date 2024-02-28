@@ -1,5 +1,6 @@
 let fullNameList = [];
 let map = new Map();
+let totalRows = 0;
 
 function addName() {
   let fname = document.getElementById("fname").value;
@@ -20,12 +21,13 @@ function addName() {
       fullName: fullNameKey,
     }) - 1;
   map.set(fullNameKey, index);
+
   let innerHtml = "";
 
   for (let names of fullNameList) {
     innerHtml += `<div class="row justify-content-around column-gap-3" id="${names.fullName}">
     <div class="col-1 d-flex border border-secondary text-bg-light justify-content-center">
-    <input type="checkbox" class="checkbox" name="${names.fullName}Checked" id="${names.fullName}Checked" />
+    <input type="checkbox" class="checkbox" value="rowCheckbox" name="${names.fullName}Checked" id="${names.fullName}Checked" />
   </div>
           <div class="col d-flex border border-secondary text-bg-light p-1 justify-content-start">
           <div>
@@ -41,7 +43,7 @@ function addName() {
             <button type="button" class="btn btn-info me-1 btn-sm px-3 edit" value="edit">
               Edit
             </button>
-            <button type="button" class="btn btn-danger btn-sm delete" value="delete">
+            <button type="button" class="btn btn-danger btn-sm delete" value="delete" disabled>
               Delete
             </button>
           </div>
@@ -50,6 +52,8 @@ function addName() {
   document.getElementById("fname").value = "";
   document.getElementById("lname").value = "";
   document.getElementById("nameList").innerHTML = innerHtml;
+  totalRows++;
+  updateSelectedCheckboxCount();
   console.log(map);
 }
 
@@ -73,14 +77,47 @@ function edit(event) {
     // }
   }
   if (event.target.value === "delete") deleteName(event.target.closest(".row"));
+  if (event.target.value === "rowCheckbox") {
+    updateSelectedCheckboxCount();
+  }
+  if (event.target.value === "allChecked") {
+    if (event.target.checked) allChecked(true);
+    else allChecked(false);
+  }
   if (event.target.value === "deleteChecked") deleteChecked();
+}
+
+function updateSelectedCheckboxCount() {
+  let allCheckboxes = document.querySelectorAll(".checkbox");
+  let totalSelectedRows = 0;
+  for (let checkbox of allCheckboxes) {
+    let fullName = checkbox.id.split("Checked")[0];
+    if (checkbox.checked) {
+      totalSelectedRows++;
+      document.querySelector(`#${fullName} .edit`).disabled = true;
+      document.querySelector(`#${fullName} .delete`).disabled = false;
+    } else {
+      document.querySelector(`#${fullName} .delete`).disabled = true;
+      document.querySelector(`#${fullName} .edit`).disabled = false;
+    }
+    document.getElementById("rowCount").innerHTML = totalSelectedRows;
+    if (totalSelectedRows === totalRows)
+      document.getElementById("allChecked").checked = true;
+    else document.getElementById("allChecked").checked = false;
+  }
 }
 
 function deleteName(event) {
   fullName = event.id;
   fullNameList.splice(map.get(fullName), 1);
+  let tempMap = new Map();
+  fullNameList.forEach((name, index) => {
+    tempMap.set(name.fullName, index);
+  });
+  map = tempMap;
   document.getElementById(fullName).remove();
-  map.delete(fullName);
+  totalRows--;
+  updateSelectedCheckboxCount();
   console.log(fullNameList);
   console.log(map);
 }
@@ -121,6 +158,34 @@ function updateName(event) {
   console.log(map);
 }
 
+function allChecked(flag) {
+  if (flag) {
+    document.getElementById("rowCount").innerHTML = totalRows;
+    let deleteBtns = document.querySelectorAll(".delete");
+    for (let btn of deleteBtns) {
+      btn.disabled = false;
+    }
+    let editBtns = document.querySelectorAll(".edit");
+    for (let btn of editBtns) {
+      btn.disabled = true;
+    }
+  } else {
+    document.getElementById("rowCount").innerHTML = 0;
+    let deleteBtnsBtns = document.querySelectorAll(".delete");
+    for (let btn of deleteBtnsBtns) {
+      btn.disabled = true;
+    }
+    let editBtns = document.querySelectorAll(".edit");
+    for (let btn of editBtns) {
+      btn.disabled = false;
+    }
+  }
+  let allCheckboxes = document.querySelectorAll(".checkbox");
+  for (let checkbox of allCheckboxes) {
+    checkbox.checked = flag;
+  }
+}
+
 function deleteChecked() {
   if (document.getElementById("allChecked").checked) {
     document.getElementById("nameList").innerHTML = "";
@@ -136,7 +201,11 @@ function deleteChecked() {
       let fullName = checkbox.id.split("Checked")[0];
       fullNameList.splice(map.get(fullName), 1);
       document.getElementById(fullName).remove();
-      map.delete(fullName);
+      let tempMap = new Map();
+      fullNameList.forEach((name, index) => {
+        tempMap.set(name.fullName, index);
+      });
+      map = tempMap;
       console.log(fullNameList);
       console.log(map);
       console.log(fullName);

@@ -73,19 +73,20 @@
             <div
               class="col d-flex border border-secondary text-bg-light p-1 justify-content-start"
             >
-              Total selected row(s)
+              Total <span id="rowCount"></span> selected row(s)
             </div>
             <div class="col-2 d-flex justify-content-start">
               <button
                 type="button"
                 class="btn btn-danger btn-sm delete"
                 value="deleteChecked"
+                disabled
               >
                 Delete
               </button>
             </div>
           </div>
-          <div id="nameList"></div>
+          <div id="nameList" class="d-flex flex-column gap-3"></div>
         </div>
       </div>
     </div>

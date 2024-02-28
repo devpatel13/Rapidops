@@ -11,57 +11,57 @@ let staticArray = [
     fname: "Charlotte",
     lname: "Anderson",
   },
-  {
-    fname: "Daniel",
-    lname: "White",
-  },
-  {
-    fname: "Mia",
-    lname: "White",
-  },
-  {
-    fname: "Ava",
-    lname: "Smith",
-  },
-  {
-    fname: "Ava",
-    lname: "Jones",
-  },
-  {
-    fname: "Charlotte",
-    lname: "Smith",
-  },
-  {
-    fname: "Alexander",
-    lname: "Jones",
-  },
-  {
-    fname: "Benjamin",
-    lname: "Miller",
-  },
-  {
-    fname: "Ava",
-    lname: "Thomas",
-  },
-  {
-    fname: "William",
-    lname: "Smith",
-  },
-  {
-    fname: "Daniel",
-    lname: "Wilson",
-  },
-  {
-    fname: "Michael",
-    lname: "White",
-  },
-  {
-    fname: "Mia",
-    lname: "Harris",
-  },
+  // {
+  //   fname: "Daniel",
+  //   lname: "White",
+  // },
+  // {
+  //   fname: "Mia",
+  //   lname: "White",
+  // },
+  // {
+  //   fname: "Ava",
+  //   lname: "Smith",
+  // },
+  // {
+  //   fname: "Ava",
+  //   lname: "Jones",
+  // },
+  // {
+  //   fname: "Charlotte",
+  //   lname: "Smith",
+  // },
+  // {
+  //   fname: "Alexander",
+  //   lname: "Jones",
+  // },
+  // {
+  //   fname: "Benjamin",
+  //   lname: "Miller",
+  // },
+  // {
+  //   fname: "Ava",
+  //   lname: "Thomas",
+  // },
+  // {
+  //   fname: "William",
+  //   lname: "Smith",
+  // },
+  // {
+  //   fname: "Daniel",
+  //   lname: "Wilson",
+  // },
+  // {
+  //   fname: "Michael",
+  //   lname: "White",
+  // },
+  // {
+  //   fname: "Mia",
+  //   lname: "Harris",
+  // },
 ];
 
-let fullNameList;
+let fullNameList = [];
 
 let map = new Map();
 
@@ -73,16 +73,20 @@ function render() {
 
   staticArray.forEach((name) => {
     fullName = name.fname.toLowerCase() + name.lname.toLowerCase();
-    let index =
-      tempNameList.push({
-        fname: name.fname[0].toUpperCase() + name.fname.slice(1).toLowerCase(),
-        lname: name.lname[0].toUpperCase() + name.lname.slice(1).toLowerCase(),
-        fullName: fullName,
-      }) - 1;
-    tempMap.set(fullName, index);
+    if (!map.has(fullName)) {
+      let index =
+        fullNameList.push({
+          fname:
+            name.fname[0].toUpperCase() + name.fname.slice(1).toLowerCase(),
+          lname:
+            name.lname[0].toUpperCase() + name.lname.slice(1).toLowerCase(),
+          fullName: fullName,
+        }) - 1;
+      map.set(fullName, index);
+    }
   });
 
-  for (let names of tempNameList) {
+  for (let names of fullNameList) {
     innerHtml += `<div class="row justify-content-around column-gap-3" id="${names.fullName}">
               <div class="col d-flex border border-secondary text-bg-light p-1 justify-content-start">
                 ${names.fname}
@@ -102,8 +106,6 @@ function render() {
   }
   document.getElementById("nameList").innerHTML = innerHtml;
   document.getElementById("addBtn").disabled = false;
-  map = tempMap;
-  fullNameList = tempNameList;
   console.log(fullNameList);
   console.log(map);
 }
@@ -155,7 +157,6 @@ function addName() {
 }
 
 function edit(event) {
-  //   console.log(event.target.value);
   if (event.target.value === "edit") {
     let fullName = event.target.closest(".row").id;
     console.log(fullNameList);
@@ -167,11 +168,6 @@ function edit(event) {
     addButton.hidden = true;
     document.getElementById("updateBtn").hidden = false;
     document.getElementById("updateBtn").value = fullName;
-    // let editButtons = document.querySelectorAll('.edit')
-    // let deleteButtons = document.querySelectorAll('.delete')
-    // for(let btn of editButtons){
-    //     btn.disabled
-    // }
   }
   if (event.target.value === "delete") deleteName(event.target.closest(".row"));
 }
@@ -179,8 +175,12 @@ function edit(event) {
 function deleteName(event) {
   fullName = event.id;
   fullNameList.splice(map.get(fullName), 1);
+  let tempMap = new Map();
+  fullNameList.forEach((name, index) => {
+    tempMap.set(name.fullName, index);
+  });
+  map = tempMap;
   document.getElementById(fullName).remove();
-  map.delete(fullName);
   console.log(fullNameList);
   console.log(map);
 }
