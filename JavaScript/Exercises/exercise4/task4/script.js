@@ -1,30 +1,32 @@
-let fullNameList = [];
-let map = new Map();
+let nameList = [];
+let namesMap = new Map();
 let totalRows = 0;
+let fname = document.getElementById("fname");
+let lname = document.getElementById("lname");
 
 function addName() {
-  let fname = document.getElementById("fname").value;
-  let lname = document.getElementById("lname").value;
-  if (!fname || !lname) {
+  let fnameValue = fname.value;
+  let lnameValue = lname.value;
+  if (!fnameValue || !lnameValue) {
     alert("Name cannot be null");
     return;
   }
-  let fullNameKey = fname.toLowerCase() + lname.toLowerCase();
-  if (map.has(fullNameKey)) {
+  let fullNameKey = fnameValue.toLowerCase() + lnameValue.toLowerCase();
+  if (namesMap.has(fullNameKey)) {
     alert("Name cannot be same");
     return;
   }
   let index =
-    fullNameList.push({
-      fname: fname[0].toUpperCase() + fname.slice(1).toLowerCase(),
-      lname: lname[0].toUpperCase() + lname.slice(1).toLowerCase(),
+    nameList.push({
+      fname: fnameValue[0].toUpperCase() + fnameValue.slice(1).toLowerCase(),
+      lname: lnameValue[0].toUpperCase() + lnameValue.slice(1).toLowerCase(),
       fullName: fullNameKey,
     }) - 1;
-  map.set(fullNameKey, index);
+  namesMap.set(fullNameKey, index);
 
   let innerHtml = "";
 
-  for (let names of fullNameList) {
+  for (let names of nameList) {
     innerHtml += `<div class="row justify-content-around column-gap-3" id="${names.fullName}">
     <div class="col-1 d-flex border border-secondary text-bg-light justify-content-center">
     <input type="checkbox" class="checkbox" value="rowCheckbox" name="${names.fullName}Checked" id="${names.fullName}Checked" />
@@ -49,32 +51,18 @@ function addName() {
           </div>
         </div>`;
   }
-  document.getElementById("fname").value = "";
-  document.getElementById("lname").value = "";
+  fname.value = "";
+  lname.value = "";
   document.getElementById("nameList").innerHTML = innerHtml;
   totalRows++;
   updateSelectedCheckboxCount();
-  console.log(map);
+  console.log(namesMap);
 }
 
-function edit(event) {
+function clickEvent(event) {
   //   console.log(event.target.value);
   if (event.target.value === "edit") {
-    let fullName = event.target.closest(".row").id;
-    console.log(fullNameList);
-    document.getElementById("fname").placeholder =
-      fullNameList[map.get(fullName)].fname;
-    document.getElementById("lname").placeholder =
-      fullNameList[map.get(fullName)].lname;
-    let addButton = document.getElementById("addBtn");
-    addButton.hidden = true;
-    document.getElementById("updateBtn").hidden = false;
-    document.getElementById("updateBtn").value = fullName;
-    // let editButtons = document.querySelectorAll('.edit')
-    // let deleteButtons = document.querySelectorAll('.delete')
-    // for(let btn of editButtons){
-    //     btn.disabled
-    // }
+    editName(event.target.closest(".row").id);
   }
   if (event.target.value === "delete") deleteName(event.target.closest(".row"));
   if (event.target.value === "rowCheckbox") {
@@ -100,62 +88,104 @@ function updateSelectedCheckboxCount() {
       document.querySelector(`#${fullName} .delete`).disabled = true;
       document.querySelector(`#${fullName} .edit`).disabled = false;
     }
-    document.getElementById("rowCount").innerHTML = totalSelectedRows;
-    if (totalSelectedRows === totalRows)
+    document.getElementById("rowCount").innerHTML = ` ${totalSelectedRows} `;
+    if (totalSelectedRows === totalRows) {
+      document.getElementById("deleteChecked").disabled = false;
       document.getElementById("allChecked").checked = true;
-    else document.getElementById("allChecked").checked = false;
+    } else {
+      document.getElementById("deleteChecked").disabled = true;
+      document.getElementById("allChecked").checked = false;
+    }
   }
+}
+
+function editName(fullName) {
+  console.log(nameList);
+  let deleteBtns = document.querySelectorAll(".delete");
+  for (let deleteBtn of deleteBtns) {
+    deleteBtn.disabled = false;
+  }
+  document.querySelector(`#${fullName} .delete`).disabled = true;
+  console.log(document.querySelector(`#${fullName}Checked`));
+  document.querySelector(`#${fullName}Checked`).disabled = true;
+  fname.value = "";
+  lname.value = "";
+  fname.placeholder = nameList[namesMap.get(fullName)].fname;
+  lname.placeholder = nameList[namesMap.get(fullName)].lname;
+  let addButton = document.getElementById("addBtn");
+  addButton.hidden = true;
+  document.getElementById("updateBtn").hidden = false;
+  document.getElementById("updateBtn").value = fullName;
 }
 
 function deleteName(event) {
   fullName = event.id;
-  fullNameList.splice(map.get(fullName), 1);
+  nameList.splice(namesMap.get(fullName), 1);
   let tempMap = new Map();
-  fullNameList.forEach((name, index) => {
+  nameList.forEach((name, index) => {
     tempMap.set(name.fullName, index);
   });
-  map = tempMap;
+  namesMap = tempMap;
   document.getElementById(fullName).remove();
   totalRows--;
   updateSelectedCheckboxCount();
-  console.log(fullNameList);
-  console.log(map);
+  console.log(nameList);
+  console.log(namesMap);
 }
 
 function updateName(event) {
-  let fname = document.getElementById("fname").value;
-  let lname = document.getElementById("lname").value;
-  if (!fname || !lname) {
-    alert("Name cannot be null");
-    return;
-  }
-  let newFullName = fname.toLowerCase() + lname.toLowerCase();
-  if (map.has(newFullName)) {
-    alert("Name already exists");
-    return;
-  }
+  let fnameValue = fname.value;
+  let lnameValue = lname.value;
   let fullName = event.target.value;
+
+  if (!fnameValue || !lnameValue) {
+    alert("Name cannot be empty, changes are not saved");
+    fname.placeholder = "";
+    lname.placeholder = "";
+    fname.value = "";
+    lname.value = "";
+    document.getElementById("updateBtn").hidden = true;
+    document.getElementById("addBtn").hidden = false;
+    let deleteBtns = document.querySelectorAll(".delete");
+    for (let deleteBtn of deleteBtns) {
+      deleteBtn.disabled = false;
+    }
+    document.querySelector(`#${fullName}Checked`).disabled = false;
+    return;
+  }
+
+  let newFullName = fnameValue.toLowerCase() + lnameValue.toLowerCase();
+
+  if (namesMap.has(newFullName)) {
+    alert("Name already exists");
+    fname.value = "";
+    lname.value = "";
+    fname.placeholder = nameList[namesMap.get(fullName)].fname;
+    lname.placeholder = nameList[namesMap.get(fullName)].lname;
+    return;
+  }
+
   let targetElements = document.getElementById(fullName).children;
   targetElements[0].innerText =
     fname[0].toUpperCase() + fname.slice(1).toLowerCase();
   targetElements[1].innerText =
     lname[0].toUpperCase() + lname.slice(1).toLowerCase();
-  fullNameList[map.get(fullName)] = {
+  nameList[namesMap.get(fullName)] = {
     fname: fname[0].toUpperCase() + fname.slice(1).toLowerCase(),
     lname: lname[0].toUpperCase() + lname.slice(1).toLowerCase(),
-    fullName,
+    fullName: newFullName,
   };
   document.getElementById(fullName).id = newFullName;
-  map.set(newFullName, map.get(fullName));
-  map.delete(fullName);
-  document.getElementById("fname").placeholder = "";
-  document.getElementById("lname").placeholder = "";
-  document.getElementById("fname").value = "";
-  document.getElementById("lname").value = "";
+  namesMap.set(newFullName, namesMap.get(fullName));
+  namesMap.delete(fullName);
+  fname.placeholder = "";
+  lname.placeholder = "";
+  fname.value = "";
+  lname.value = "";
   document.getElementById("updateBtn").hidden = true;
   document.getElementById("addBtn").hidden = false;
-  console.log(fullNameList);
-  console.log(map);
+  console.log(nameList);
+  console.log(namesMap);
 }
 
 function allChecked(flag) {
@@ -189,25 +219,25 @@ function allChecked(flag) {
 function deleteChecked() {
   if (document.getElementById("allChecked").checked) {
     document.getElementById("nameList").innerHTML = "";
-    fullNameList = [];
-    map.clear();
+    nameList = [];
+    namesMap.clear();
     document.getElementById("allChecked").checked = false;
-    console.log(fullNameList);
-    console.log(map);
+    console.log(nameList);
+    console.log(namesMap);
   }
   let allCheckboxes = document.querySelectorAll(".checkbox");
   for (let checkbox of allCheckboxes) {
     if (checkbox.checked) {
       let fullName = checkbox.id.split("Checked")[0];
-      fullNameList.splice(map.get(fullName), 1);
+      nameList.splice(namesMap.get(fullName), 1);
       document.getElementById(fullName).remove();
       let tempMap = new Map();
-      fullNameList.forEach((name, index) => {
+      nameList.forEach((name, index) => {
         tempMap.set(name.fullName, index);
       });
-      map = tempMap;
-      console.log(fullNameList);
-      console.log(map);
+      namesMap = tempMap;
+      console.log(nameList);
+      console.log(namesMap);
       console.log(fullName);
     }
   }

@@ -103,11 +103,16 @@ function updateName(event) {
     return;
   }
   let newFullName = fnameValue.toLowerCase() + lnameValue.toLowerCase();
+  let fullName = event.target.value;
+
   if (namesMap.has(newFullName)) {
     alert("Name already exists");
+    fname.value = "";
+    lname.value = "";
+    fname.placeholder = nameList[namesMap.get(fullName)].fname;
+    lname.placeholder = nameList[namesMap.get(fullName)].lname;
     return;
   }
-  let fullName = event.target.value;
   let targetElements = document.getElementById(fullName).children;
   targetElements[0].innerText =
     fnameValue[0].toUpperCase() + fnameValue.slice(1).toLowerCase();
@@ -116,7 +121,7 @@ function updateName(event) {
   nameList[namesMap.get(fullName)] = {
     fname: fnameValue[0].toUpperCase() + fnameValue.slice(1).toLowerCase(),
     lname: lnameValue[0].toUpperCase() + lnameValue.slice(1).toLowerCase(),
-    fullName,
+    fullName: newFullName,
   };
   document.getElementById(fullName).id = newFullName;
   namesMap.set(newFullName, namesMap.get(fullName));
@@ -130,5 +135,6 @@ function updateName(event) {
   console.log(nameList);
   console.log(namesMap);
 }
-
 // enable delete btn on update
+
+// line 124
