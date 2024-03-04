@@ -16,14 +16,19 @@
     <div class="d-flex flex-column min-vh-100 min-vw-100">
       <div
         class="d-flex flex-grow-1 justify-content-center align-items-center m-5 flex-column"
-        onclick="clickEvent()"
       >
         <div class="container text-center" hidden>
           <div class="row col-gap-3">
             <div class="col border p-5" id="box3" value="box3">
               <h4>3</h4>
+              <h5 id="box3H5" hidden>OOPS!</h5>
             </div>
-            <div class="col border p-5" id="box1" value="box1">
+            <div
+              class="col border p-5"
+              id="box1"
+              value="box1"
+              onclick="box1ClickEvent()"
+            >
               <h4 class="mb-5">1</h4>
               <h5>Click Me!</h5>
             </div>

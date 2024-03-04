@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Course</title>
+  </head>
+  <body>
+    <form id="myform">
+      <h1>Add Course</h1>
+      <div>
+        <label for="coursename">Course Name:</label><br />
+        <input
+          type="text"
+          name="coursename"
+          id="coursename"
+          onblur="validateCourseName()"
+        />
+      </div>
+      <div>
+        <label for="coursetitle">Course Title</label><br />
+        <input
+          type="text"
+          name="coursetitle"
+          id="coursetitle"
+          onblur="validateCourseTitle()"
+        />
+      </div>
+      <div id="students">
+        <label for="studentName">Assign Course:</label>
+        <br />
+        <select name="studentName" id="studentName" multiple></select>
+      </div>
+
+      <div>
+        <button onclick="return addCourse()">Add</button>
+      </div>
+    </form>
+    <script src="addCourse.js"></script>
+  </body>
+</html>

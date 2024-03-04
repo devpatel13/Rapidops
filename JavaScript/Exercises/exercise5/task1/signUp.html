@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forms</title>
+    <style>
+      form {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 30px;
+        width: 60%;
+      }
+      form h1 {
+        margin-left: 35%;
+      }
+      form div {
+        margin-left: 35%;
+      }
+      button {
+        padding: 1.5%;
+        background-color: aquamarine;
+        border: 1px solid aquamarine;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <form onreset="removeErrors()" id="myform">
+      <h1>Form</h1>
+      <div>
+        <label for="username">Username:</label><br />
+        <input
+          type="text"
+          name="text"
+          id="username"
+          onblur="validateUsername()"
+        />
+      </div>
+      <div>
+        <label for="email">Email</label><br />
+        <input type="text" name="email" id="email" onblur="validateEmail()" />
+      </div>
+      <div>
+        <label for="password">Password</label><br />
+        <input
+          type="password"
+          name="password"
+          id="pass1"
+          onblur="validatePassword()"
+        />
+      </div>
+      <div>
+        <label for="password">Comfirm Password</label><br />
+        <input
+          type="password"
+          name="password"
+          id="pass2"
+          onblur="validateConfirmPassword()"
+        />
+      </div>
+      <div>
+        <label for="age">age</label><br />
+        <input type="number" name="age" id="age" onblur="validateAge()" />
+      </div>
+      <div id="radio">
+        <label for="radio">Gender</label><br />
+        <input
+          type="radio"
+          id="male"
+          name="gender"
+          value="Male"
+          onblur="validateGender()"
+        />
+        <label for="male">Male</label><br />
+        <input type="radio" id="female" name="gender" value="Female" />
+        <label for="female">Female</label><br />
+      </div>
+      <div id="checkbox">
+        <label for="subject">Terms and Conditions</label>
+        <input
+          type="checkbox"
+          id="termsandcondition"
+          name="termsandcondition"
+          value="agreed"
+          onblur="validateTermsAndCondition()"
+        />
+      </div>
+
+      <div>
+        <button type="reset">Reset</button>
+        <button onclick="return formValidate()">Submit</button>
+      </div>
+    </form>
+
+    <script src="signUp.js"></script>
+  </body>
+</html>
