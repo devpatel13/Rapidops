@@ -27,7 +27,12 @@ function addCourse() {
     if (selectedUsers.length) {
       assignedCourse = localStorage.getItem("assignedCourse");
 
-      if (assignedCourse != null) {
+      if (
+        assignedCourse != null &&
+        assignedCourse != "null" &&
+        assignedCourse != "undefined"
+      ) {
+        assignedCourse = JSON.parse(assignedCourse);
         assignedUsers = Object.keys(assignedCourse);
         for (let user of selectedUsers) {
           newlyAssignedUsers.push(user.value);
@@ -44,9 +49,11 @@ function addCourse() {
         }
       } else {
         assignedCourse = {};
+        assignedUsers = Object.keys(assignedCourse);
         //   let assignedCourse = new Map();
         for (let user of selectedUsers) {
           assignedCourse[user.value] = [coursename];
+          newlyAssignedUsers.push(user.value);
         }
       }
       console.log(assignedCourse);
@@ -60,12 +67,10 @@ function addCourse() {
 
       console.log(JSON.stringify(assignedCourse));
       localStorage.setItem("assignedCourse", JSON.stringify(assignedCourse));
-      localStorage.setItem("courses", JSON.stringify(courses));
-      console.log(courses);
     }
 
     let courses = localStorage.courses;
-    if (courses) {
+    if (courses != "undefined" && courses != null && courses != "null") {
       courses = JSON.parse(courses);
       courses[coursename] = coursetitle;
     } else {
@@ -74,6 +79,7 @@ function addCourse() {
     }
     localStorage.setItem("courses", JSON.stringify(courses));
     console.log(courses);
+    window.location.href = "./homePage.html";
   }
 
   //   if(assignedCourse)
@@ -113,4 +119,8 @@ function addErrorElement(adjacentField, text, id) {
   p.innerText = text;
   adjacentField.after(p);
   adjacentField.focus();
+}
+
+function goToHome() {
+  window.location.href = "./homePage.html";
 }

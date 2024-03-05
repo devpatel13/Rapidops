@@ -6,13 +6,16 @@ if (localStorage.getItem("users")) {
   users.push(...tempArr);
 }
 
+window.onload = alert(
+  "To check Admin Rights use credentials, username: admin, password: admin"
+);
 // Login Page
 function validateUser() {
   let username = form.username.value;
   let password = form.password.value;
   for (let user of users) {
     if (username === user.username && password === user.password) {
-      alert("Valid User");
+      // alert("Valid User");
       let loggedInUser = JSON.stringify({ username, password });
       document.cookie = `loggedInUser=${loggedInUser}; path=/Exercises/exercise5/task1/`;
       window.location.href = "./homePage.html";
@@ -20,6 +23,10 @@ function validateUser() {
     }
   }
   alert("User does not exists");
-  location.href = "../signUp/index.html";
+  // location.href = "../signUp/index.html";
   return false;
+}
+
+function goToSignUpPage() {
+  window.location.href = "./signUp.html";
 }

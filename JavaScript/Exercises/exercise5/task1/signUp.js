@@ -15,10 +15,10 @@ function formValidate() {
   flag = validatePassword(false);
 
   //  Age Validation
-  flag = validateAge(false);
+  // flag = validateAge(false);
 
   //   Gender Validation
-  flag = validateGender(false);
+  // flag = validateGender(false);
 
   // Terms and Conditions Validation
   flag = validateTermsAndCondition(false);
@@ -26,7 +26,7 @@ function formValidate() {
   //   console.log(flag);
   if (flag) {
     removeErrors();
-    console.log("Form Details are valid");
+    // console.log("Form Details are valid");
     let existingUsers = JSON.parse(localStorage.getItem("users"));
     if (existingUsers != null) {
       if (!validateUser(existingUsers)) {
@@ -212,7 +212,7 @@ function validateTermsAndCondition(doFocus = true) {
 
 function addErrorElement(adjacentField, text, id) {
   let p = document.createElement("p");
-  p.style = "color:red";
+  p.style = "color:red; ";
   p.id = id;
   p.innerText = text;
   adjacentField.after(p);
@@ -221,7 +221,7 @@ function addErrorElement(adjacentField, text, id) {
 
 function removeErrors() {
   document.querySelectorAll("p").forEach((pElem) => {
-    pElem.remove();
+    if (!(pElem.id === "redirectLink")) pElem.remove();
   });
   flag = true;
 }

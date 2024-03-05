@@ -4,24 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <form id="myform">
-      <h1>Form</h1>
-      <div>
-        <label for="username">Username:</label><br />
-        <input type="text" name="text" id="username" />
-      </div>
-
-      <div>
-        <label for="password">Password</label><br />
-        <input type="password" name="password" id="password" />
-      </div>
-
-      <div>
-        <button onclick="return validateUser()">Submit</button>
-      </div>
-    </form>
+    <nav>
+      <a href="#"><img src="images/logo.png" alt="logo" /></a>
+    </nav>
+    <div class="form-wrapper">
+      <h2>Sign In</h2>
+      <form id="myform">
+        <div class="form-control">
+          <input type="text" id="username" />
+          <label for="username">Email or phone number</label>
+        </div>
+        <div class="form-control">
+          <input type="password" name="password" id="password" />
+          <label for="password">Password</label>
+        </div>
+        <button onclick="return validateUser()">Sign In</button>
+      </form>
+      <p>New to Netflix? <a href="./signUp.html">Sign up now</a></p>
+    </div>
 
     <script src="login.js"></script>
   </body>
