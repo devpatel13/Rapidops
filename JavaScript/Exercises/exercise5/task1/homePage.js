@@ -81,16 +81,14 @@ function displayCourseOnPage(course, courses) {
     removeButton.addEventListener("click", (e) => {
       removeCourse(e);
     });
-    let editButton = createElem(
-      "button",
-      `${course.coursename}editBtn`,
-      "Edit Course"
-    );
+    let editButton = createElem("button", 0, "Edit Course");
+    editButton.id = `${course}editBtn`;
+    editButton.style = "margin-top:12px";
     editButton.addEventListener("click", (e) => {
       editCourse(e);
     });
     cardBody.append(courseName, courseTitle);
-    cardDiv.append(cardBody, removeButton);
+    cardDiv.append(cardBody, removeButton, editButton);
   } else {
     cardBody.append(courseName, courseTitle);
     cardDiv.append(cardBody);
@@ -131,7 +129,11 @@ function removeCourse(event) {
   }
 }
 
-function editCourse(event) {}
+function editCourse(event) {
+  window.location.href =
+    "./editCourse.html?Coursename=" +
+    event.target.id.slice(0, event.target.id.length - 7);
+}
 
 function goToAddCourse() {
   location.href = "./addCourse.html";

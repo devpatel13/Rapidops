@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Course</title>
+    <link rel="stylesheet" href="addCourse.css" />
+  </head>
+  <body>
+    <nav>
+      <div>
+        <a href="#"><img src="images/logo.png" alt="logo" /></a>
+      </div>
+      <div style="display: flex; flex-direction: row; column-gap: 30px">
+        <h1 id="role"></h1>
+        <button
+          onclick="goToHome()"
+          style="display: inline-block; white-space: nowrap"
+        >
+          Home
+        </button>
+      </div>
+    </nav>
+    <div class="form-wrapper">
+      <form id="myform">
+        <h2 style="padding-bottom: 20px">Edit Course</h2>
+        <div class="form-control">
+          <input
+            type="text"
+            name="coursename"
+            id="coursename"
+            onblur="validateCourseName()"
+            onfocus="removeCourseError()"
+          />
+          <label for="coursename">Course Name:</label>
+        </div>
+        <div class="form-control">
+          <input
+            type="text"
+            name="coursetitle"
+            id="coursetitle"
+            onblur="validateCourseTitle()"
+          />
+          <label for="coursetitle">Course Title</label>
+        </div>
+        <label for="assignedStudents">Assigned Course(Select to remove):</label>
+        <div id="assignedStudents" class="form-control">
+          <select
+            name="assignedStudentName"
+            id="assignedStudentName"
+            multiple
+          ></select>
+        </div>
+        <label for="notAssignedStudents"
+          >Students Left(Select to remove):</label
+        >
+        <div id="notAssignedStudents" class="form-control">
+          <select
+            name="notAssignedStudentName"
+            id="notAssignedStudentName"
+            multiple
+          ></select>
+        </div>
+
+        <div>
+          <button onclick="return editCourse()">Edit</button>
+        </div>
+      </form>
+    </div>
+    <script src="editCourse.js"></script>
+  </body>
+</html>

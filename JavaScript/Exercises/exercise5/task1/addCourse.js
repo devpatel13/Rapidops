@@ -68,7 +68,7 @@ function addCourse() {
     }
     localStorage.setItem(
       "studentToCourseMap",
-      JSON.stringify(studentToCourseMap)
+      JSON.stringify(newStudentToCourseMap)
     );
     localStorage.setItem("courses", JSON.stringify(courses));
     window.location.href = "./homePage.html";
