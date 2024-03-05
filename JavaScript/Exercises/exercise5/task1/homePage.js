@@ -1,12 +1,12 @@
 let admin = false;
-// let loggedInUser;
 let loggedInUser = JSON.parse(
   document.cookie.substring(document.cookie.indexOf("=") + 1)
 );
-let enrolledCourse = {};
-console.log(document.cookie);
-console.log(loggedInUser);
-if (loggedInUser.username === "admin") admin = true;
+let enrolledCourse = [];
+let courses = localStorage.getItem("courses");
+let courseDetails = {};
+
+if (loggedInUser.role === "admin") admin = true;
 
 if (admin) {
   document.getElementById("adminDiv").hidden = false;
@@ -14,11 +14,34 @@ if (admin) {
   document.getElementById("adminDiv").id = "user";
   document.getElementById("role").innerHTML = "Admin";
   document.getElementById("addCourseBtn").hidden = false;
+
+  if (courses != "undefined" && courses != null && courses != "null") {
+    courses = JSON.parse(courses);
+    courseDetails = { ...courses };
+  }
 } else {
   document.getElementById("studentDiv").hidden = false;
   document.getElementById("studentDiv").className = "user";
   document.getElementById("studentDiv").id = "user";
   document.getElementById("role").innerHTML = "Student";
+  let studentToCourseMap = localStorage.getItem("studentToCourseMap");
+  if (
+    studentToCourseMap != "undefined" &&
+    studentToCourseMap != null &&
+    studentToCourseMap != "null"
+  ) {
+    studentToCourseMap = JSON.parse(studentToCourseMap);
+    for (let elem of studentToCourseMap) {
+      if (elem[0] === loggedInUser.username) enrolledCourse.push(elem[1]);
+    }
+  }
+
+  if (courses != "undefined" && courses != null && courses != "null") {
+    courses = JSON.parse(courses);
+    enrolledCourse.forEach((elem) => {
+      courseDetails[elem] = courses[elem];
+    });
+  }
 }
 
 class Course {
@@ -58,7 +81,14 @@ function displayCourseOnPage(course, courses) {
     removeButton.addEventListener("click", (e) => {
       removeCourse(e);
     });
-    // removeButton.style = "width: 200px";
+    let editButton = createElem(
+      "button",
+      `${course.coursename}editBtn`,
+      "Edit Course"
+    );
+    editButton.addEventListener("click", (e) => {
+      editCourse(e);
+    });
     cardBody.append(courseName, courseTitle);
     cardDiv.append(cardBody, removeButton);
   } else {
@@ -101,6 +131,8 @@ function removeCourse(event) {
   }
 }
 
+function editCourse(event) {}
+
 function goToAddCourse() {
   location.href = "./addCourse.html";
 }
@@ -116,23 +148,7 @@ function logout() {
   document.cookie = "";
   window.location.href = "./login.html";
 }
-let assignedCourse = localStorage.getItem("assignedCourse");
-if (
-  assignedCourse != "undefined" &&
-  assignedCourse != null &&
-  assignedCourse != "null"
-) {
-  assignedCourse = JSON.parse(assignedCourse);
-  console.log(assignedCourse);
-  let courses = localStorage.getItem("courses");
-  if (courses != "undefined" && courses != null && courses != "null") {
-    courses = JSON.parse(courses);
-    assignedCourse[loggedInUser.username].forEach((elem) => {
-      enrolledCourse[elem] = courses[elem];
-    });
-    // console.log(assignedCourse[loggedInUser.username]);
-  }
-}
-courses = new Course(enrolledCourse);
+
+courses = new Course(courseDetails);
 console.log(courses.getCourses());
 courses.showCourses();

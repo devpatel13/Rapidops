@@ -14,19 +14,14 @@ function formValidate() {
   // Password Validation
   flag = validatePassword(false);
 
-  //  Age Validation
-  // flag = validateAge(false);
-
-  //   Gender Validation
-  // flag = validateGender(false);
+  // Role validation
+  flag = validateRole(false);
 
   // Terms and Conditions Validation
   flag = validateTermsAndCondition(false);
-  // alert(`${flag} flag`);
-  //   console.log(flag);
+
   if (flag) {
     removeErrors();
-    // console.log("Form Details are valid");
     let existingUsers = JSON.parse(localStorage.getItem("users"));
     if (existingUsers != null) {
       if (!validateUser(existingUsers)) {
@@ -42,10 +37,6 @@ function formValidate() {
     window.location.href = "./login.html";
 
     return false;
-
-    // for (let elem in userDetails) {
-    //   console.log(userDetails[elem]);
-    // }
   }
 
   return false;
@@ -150,44 +141,8 @@ function validateConfirmPassword() {
   }
 }
 
-function validateAge(doFocus = true) {
-  field = form.age;
-  if (field.value < 13 || field.value > 30) {
-    if (document.querySelector("#ageError") == null) {
-      addErrorElement(
-        field,
-        "Age must be in the 13 to 30 age range",
-        "ageError"
-      );
-    }
-    // if (doFocus) field.focus();
-    return false;
-  } else {
-    userDetails.age = field.value;
-    document.querySelector("#ageError")?.remove();
-    return true;
-  }
-}
-
-function validateGender(doFocus = true) {
-  field = form.gender;
-  if (!(field[0].checked || field[1].checked)) {
-    if (document.querySelector("#genderError") == null) {
-      addErrorElement(
-        field[1].nextElementSibling,
-        "Please select a gender",
-        "genderError"
-      );
-    }
-    // if (doFocus) field.focus();
-    console.log(`${flag} gender`);
-
-    return false;
-  } else {
-    userDetails.gender = field[0].checked ? field[0].value : field[1].value;
-    document.querySelector("#genderError")?.remove();
-    return true;
-  }
+function validateRole() {
+  userDetails.role = document.getElementById("role").value;
 }
 
 function validateTermsAndCondition(doFocus = true) {

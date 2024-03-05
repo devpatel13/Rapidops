@@ -1,9 +1,17 @@
-let users = JSON.parse(localStorage.getItem("users"));
+let users = localStorage.getItem("users");
+let allStudents = [];
+if (users != null && users != "null" && users != "undefined") {
+  users = JSON.parse(users);
+} else users = [];
+
 function setOptions() {
   if (!users) return;
   for (let user of users) {
-    let option = new Option(user.username, user.username);
-    document.getElementById("studentName").append(option);
+    if (user.role === "student") {
+      allStudents.push(user.username);
+      let option = new Option(user.username, user.username);
+      document.getElementById("studentName").append(option);
+    }
   }
 }
 setOptions();
@@ -21,68 +29,50 @@ function addCourse() {
 
   if (flag) {
     let selectedUsers = document.getElementById("studentName").selectedOptions;
-    let assignedUsers,
-      assignedCourse,
-      newlyAssignedUsers = [];
-    if (selectedUsers.length) {
-      assignedCourse = localStorage.getItem("assignedCourse");
-
-      if (
-        assignedCourse != null &&
-        assignedCourse != "null" &&
-        assignedCourse != "undefined"
-      ) {
-        assignedCourse = JSON.parse(assignedCourse);
-        assignedUsers = Object.keys(assignedCourse);
-        for (let user of selectedUsers) {
-          newlyAssignedUsers.push(user.value);
-          if (assignedUsers.includes(user.value)) {
-            if (!assignedCourse[user.value].includes(coursename)) {
-              assignedCourse[user.value] = [
-                coursename,
-                ...assignedCourse[user.value],
-              ];
-            }
-          } else {
-            assignedCourse[user.value] = [coursename];
-          }
-        }
-      } else {
-        assignedCourse = {};
-        assignedUsers = Object.keys(assignedCourse);
-        //   let assignedCourse = new Map();
-        for (let user of selectedUsers) {
-          assignedCourse[user.value] = [coursename];
-          newlyAssignedUsers.push(user.value);
-        }
-      }
-      console.log(assignedCourse);
-      assignedUsers.forEach((user, index) => {
-        if (!newlyAssignedUsers.includes(user))
-          assignedCourse[user].splice(
-            assignedCourse[user].indexOf(coursename),
-            1
-          );
-      });
-
-      console.log(JSON.stringify(assignedCourse));
-      localStorage.setItem("assignedCourse", JSON.stringify(assignedCourse));
-    }
-
+    let studentToCourseMap = localStorage.getItem("studentToCourseMap");
+    let newStudentToCourseMap = [];
+    console.log(selectedUsers);
     let courses = localStorage.courses;
     if (courses != "undefined" && courses != null && courses != "null") {
       courses = JSON.parse(courses);
-      courses[coursename] = coursetitle;
+      let courseNames = Object.keys(courses);
+      if (courseNames.includes(coursename)) {
+        addErrorElement(
+          document.getElementById("students"),
+          "Course Already Exists",
+          "courseError"
+        );
+        return false;
+      } else courses[coursename] = coursetitle;
     } else {
       courses = {};
       courses[coursename] = coursetitle;
     }
-    localStorage.setItem("courses", JSON.stringify(courses));
+    console.log(newStudentToCourseMap);
     console.log(courses);
+
+    if (selectedUsers.length) {
+      if (
+        studentToCourseMap != null &&
+        studentToCourseMap != "null" &&
+        studentToCourseMap != "undefined"
+      ) {
+        studentToCourseMap.forEach((elem) => {
+          if (!(elem[1] === coursename)) newStudentToCourseMap.push(elem);
+        });
+      }
+
+      for (let user of selectedUsers) {
+        newStudentToCourseMap.push([user.value, coursename]);
+      }
+    }
+    localStorage.setItem(
+      "studentToCourseMap",
+      JSON.stringify(studentToCourseMap)
+    );
+    localStorage.setItem("courses", JSON.stringify(courses));
     window.location.href = "./homePage.html";
   }
-
-  //   if(assignedCourse)
   return false;
 }
 
@@ -119,6 +109,10 @@ function addErrorElement(adjacentField, text, id) {
   p.innerText = text;
   adjacentField.after(p);
   adjacentField.focus();
+}
+
+function removeCourseError() {
+  document.getElementById("courseError")?.remove();
 }
 
 function goToHome() {

@@ -14,16 +14,18 @@
       <h2>Sign In</h2>
       <form id="myform">
         <div class="form-control">
-          <input type="text" id="username" />
+          <input type="text" id="username" onfocus="removeErrors()" />
           <label for="username">Email or phone number</label>
         </div>
-        <div class="form-control">
+        <div class="form-control" id="passwordDiv">
           <input type="password" name="password" id="password" />
           <label for="password">Password</label>
         </div>
         <button onclick="return validateUser()">Sign In</button>
       </form>
-      <p>New to Netflix? <a href="./signUp.html">Sign up now</a></p>
+      <p id="redirectLink">
+        New to Netflix? <a href="./signUp.html">Sign up now</a>
+      </p>
     </div>
 
     <script src="login.js"></script>

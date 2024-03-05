@@ -30,6 +30,7 @@
             name="coursename"
             id="coursename"
             onblur="validateCourseName()"
+            onfocus="removeCourseError()"
           />
           <label for="coursename">Course Name:</label>
         </div>
@@ -42,7 +43,7 @@
           />
           <label for="coursetitle">Course Title</label>
         </div>
-        <label for="studentName">Assign Course:</label>
+        <label for="studentName">Assign Course(atleast one):</label>
         <div id="students" class="form-control">
           <select name="studentName" id="studentName" multiple></select>
         </div>

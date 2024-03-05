@@ -47,6 +47,33 @@ nav a img {
   background: rgba(0, 0, 0, 0.75);
 }
 
+.form-control select {
+  height: 100%;
+  width: 100%;
+  background: #333;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0px 0px;
+  /* margin-bottom: 20px; */
+}
+
+/* .form-control option {
+  margin: 10px;
+} */
+
+.form-control select:is(:focus, :valid) {
+  background: #444;
+  padding: 16px 20px 0;
+}
+
+.form-control select:is(:focus, :valid) ~ label {
+  font-size: 0.75rem;
+  transform: translateY(-130%);
+}
+
 .form-wrapper h2 {
   color: #fff;
   font-size: 2rem;
