@@ -20,28 +20,26 @@ const pageSchema = new mongoose.Schema({
   showAuth: {
     type: Boolean,
   },
-  publishDate: {
-    type: Date,
-  },
   publishTime: {
-    type: Date,
+    type: Number,
   },
-  status: {
-    type: String,
+  toBePublished: {
+    type: Boolean,
+    required: true,
   },
   createdBy: {
     type: String,
     required: true,
   },
   createdAt: {
-    type: Date,
+    type: Number,
     required: true,
   },
   modifiedBy: {
     type: String,
   },
   modifiedAt: {
-    type: Date,
+    type: Number,
   },
 });
 
