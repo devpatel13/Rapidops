@@ -2,8 +2,11 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const authenticate = require("../middleware/authenticate");
 
 require("../db/connect");
+router.use(cookieParser());
 const User = require("../models/userSchema");
 const Page = require("../models/pageSchema");
 
@@ -28,9 +31,12 @@ router.get("/blogpage/:slug", async (req, res) => {
     else res.status(200).json({ slug: "Page scheduled" });
   } else res.status(404).json({ error: "Page does not exists" });
 });
-router.get("/allpages", async (req, res) => {
+router.get("/allpages", authenticate, async (req, res) => {
   const allPages = await Page.find();
-  res.json({ pages: allPages });
+  res.json({ pages: allPages, isAuthenticated: true });
+});
+router.get("/addpage", authenticate, (req, res) => {
+  res.status(200).json({ isAuthenticated: true });
 });
 
 //post requests
@@ -71,9 +77,10 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/addpage", async (req, res) => {
-  const { title, subTitle, bodyContent, slug, createdBy } = req.body;
-
+router.post("/addpage", authenticate, async (req, res) => {
+  const { title, subTitle, bodyContent, slug } = req.body;
+  // console.log(req.user);
+  const createdBy = req.user.username;
   if (!title || !subTitle || !bodyContent || !slug || !createdBy)
     return res.status(401).json({ error: "Fill all the required fields" });
 
@@ -118,13 +125,6 @@ router.post("/addpage", async (req, res) => {
       }
     }
 
-    let modifiedBy, modifiedAt;
-
-    if (!modifiedAt || !modifiedBy) {
-      modifiedBy = "";
-      modifiedAt = 0;
-    }
-
     const page = await Page.create({
       title,
       subTitle,
@@ -135,8 +135,6 @@ router.post("/addpage", async (req, res) => {
       toBePublished,
       createdBy,
       createdAt,
-      modifiedBy,
-      modifiedAt,
     });
 
     if (page) res.status(201).json({ success: "page created" });
@@ -166,23 +164,26 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign({ id: userExist._id }, process.env.SECERET_KEY, {
           expiresIn: "2h",
         });
-        userExist.token = token;
-        userExist.password = undefined;
-        userExist.email = undefined;
+        let user = {};
+        user.token = token;
+        user.username = userExist.username;
+        user.isSubscribed = userExist.isSubscribed;
+        user.profilePicID = userExist.profilePicID;
+        serializedUser = JSON.stringify(user);
 
         //cookies
         const options = {
           expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 100), // for 3days
           httpOnly: true,
         };
-        res.status(200).cookie("token", token, options).json({
+        res.status(200).cookie("user", serializedUser, options).json({
           success: true,
-          userExist,
         });
       }
-    }
+    } else res.status(401).json({ error: "Invalid Credentials" });
   } catch (error) {
     console.log(error);
+    return res.status(401).json({ error });
   }
 });
 
