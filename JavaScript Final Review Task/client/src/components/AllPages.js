@@ -26,9 +26,9 @@ const AllPages = () => {
           console.log(data);
           data.pages.forEach((elem) => {
             const parsedCreatedAt = new Date(elem.createdAt);
-            let parsedModifiedAt, status, modifiedBy;
-            if (elem.modifiedBy) modifiedBy = elem.modifiedBy;
-            else modifiedBy = "-";
+            let parsedModifiedAt, status, modifiedByName;
+            if (elem.modifiedByName) modifiedByName = elem.modifiedBy;
+            else modifiedByName = "-";
             if (elem.modifiedAt) parsedModifiedAt = new Date(elem.modifiedAt);
             else parsedModifiedAt = "-";
             if (elem.toBePublished) {
@@ -40,9 +40,9 @@ const AllPages = () => {
               id: elem._id,
               title: elem.title,
               slug: elem.slug,
-              createdBy: elem.createdBy,
+              createdBy: elem.author,
               createdAt: parsedCreatedAt.toString().substring(0, 25),
-              modifiedBy,
+              modifiedByName,
               modifiedAt: parsedModifiedAt.toString().substring(0, 25),
               status,
             });
@@ -159,7 +159,7 @@ const AllPages = () => {
             <tbody>
               {page.map((row, index) => (
                 <tr key={index}>
-                  <td className="allPagesTableTitle">
+                  <td className="allPag esTableTitle">
                     <DropdownButton
                       id="dropdown-basic-button"
                       title={row.title}
@@ -183,7 +183,7 @@ const AllPages = () => {
                   <td>{row.slug}</td>
                   <td>{row.createdBy}</td>
                   <td>{row.createdAt}</td>
-                  <td>{row.modifiedBy}</td>
+                  <td>{row.modifiedByName}</td>
                   <td>{row.modifiedAt}</td>
                   <td>{row.status}</td>
                 </tr>

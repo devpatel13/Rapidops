@@ -35,8 +35,16 @@ const pageSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  author: {
+    type: String,
+    required: true,
+  },
   modifiedBy: {
     type: String,
+  },
+  modifiedByName: {
+    type: String,
+    // required: true,
   },
   modifiedAt: {
     type: Number,

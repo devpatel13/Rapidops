@@ -5,7 +5,7 @@ import loginLogo from "../img/loginLogo.png";
 const Login = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const loginUser = async (e) => {
@@ -17,7 +17,7 @@ const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username,
+        email,
         password,
       }),
     });
@@ -44,19 +44,19 @@ const Login = () => {
       <div className="signInLoginFormDiv">
         <h2>Login</h2>
         <form id="signInLoginForm">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="email">Email:</label>
           <input
-            id="username"
+            id="email"
             type="text"
             className="input-field"
-            placeholder="Enter Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="password">Password:</label>
           <input
             id="password"
-            type="text"
+            type="password"
             className="input-field"
             placeholder="Enter Password"
             value={password}

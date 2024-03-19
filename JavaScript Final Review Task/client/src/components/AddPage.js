@@ -2,12 +2,15 @@ import { React, useState, useEffect } from "react";
 import { resolvePath, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import gearLogo from "../img/gear.png";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Dropdown } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill, { Quill } from "react-quill";
 // import TextEditor from "./TextEditor";
 const AddPage = () => {
   const navigate = useNavigate();
+  const [author, setAuthor] = useState("");
+  let toBePublished = false;
+  const [files, setFiles] = useState([]);
 
   useEffect(() => {
     fetch("/addpage", {
@@ -20,6 +23,7 @@ const AddPage = () => {
           alert("Login first");
           navigate("/login");
         }
+        setAuthor(data.username);
       });
   }, []);
 
@@ -29,8 +33,8 @@ const AddPage = () => {
     bodyContent: "",
     slug: "",
     createdBy: "",
+    author: "",
     showAuth: false,
-    toBePublished: false,
     publishDate: undefined,
     publishTime: undefined,
   });
@@ -47,6 +51,11 @@ const AddPage = () => {
     } else value = e.target.value;
 
     setPage({ ...page, [name]: value });
+  };
+  const handleFileChange = (event) => {
+    // Get selected files
+    const selectedFiles = Array.from(event.target.files);
+    setFiles(selectedFiles);
   };
 
   const modules = {
@@ -81,15 +90,7 @@ const AddPage = () => {
   const postPage = async (e) => {
     e.preventDefault();
 
-    const {
-      title,
-      subTitle,
-      slug,
-      showAuth,
-      toBePublished,
-      publishDate,
-      publishTime,
-    } = page;
+    const { title, subTitle, slug, showAuth, publishDate, publishTime } = page;
 
     const bodyContent = content;
     console.log(toBePublished);
@@ -106,6 +107,7 @@ const AddPage = () => {
           subTitle,
           bodyContent,
           slug,
+          author,
           //   createdBy,
           showAuth,
           toBePublished,
@@ -136,7 +138,8 @@ const AddPage = () => {
 
   const publishPage = async (e) => {
     e.preventDefault();
-    setPage({ ...page, toBePublished: true });
+    toBePublished = true;
+    console.log(toBePublished);
     postPage(e);
     handleClose();
   };
@@ -144,6 +147,22 @@ const AddPage = () => {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+
+  const handlePreview = () => {
+    console.log("Preview clicked");
+    if (!page.title) alert("Title is necessary for Preview");
+    else {
+      localStorage.setItem(
+        "blogData",
+        JSON.stringify({
+          title: page.title,
+          subTitle: page.subTitle,
+          bodyContent: page.bodyContent,
+        })
+      );
+      window.open("/previewpage", "_blank");
+    }
+  };
 
   return (
     <>
@@ -157,7 +176,19 @@ const AddPage = () => {
             </div>
           </div>
           <div className="addPageHeaderButtons">
-            <img src={gearLogo} />
+            <Dropdown>
+              <Dropdown.Toggle variant="link" id="dropdown-basic">
+                <img
+                  src={gearLogo}
+                  alt="Three dots"
+                  style={{ width: "20px" }}
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={handlePreview}>Preview</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <button type="button" id="cancelBtn" onClick={goToAllPage}>
               Cancel
             </button>
@@ -206,7 +237,17 @@ const AddPage = () => {
                 onChange={setContent}
               ></ReactQuill>
             </div>
+            <div className="attachements">
+              <label htmlFor="title">Attachements:</label>
+              <input
+                id="title"
+                type="file"
+                onChange={handleFileChange}
+                multiple
+              />
+            </div>
           </form>
+
           <div className="pageMetaContent" onChange={handleInputs}>
             <div className="pageMetaContentHead">
               <h2>Configurations</h2>
@@ -222,7 +263,7 @@ const AddPage = () => {
             </div>
             <div className="pageMetaContentElem">
               <label htmlFor="author">Author:</label>
-              <h2 id="author">Adam</h2>
+              <h2 id="author">{author}</h2>
             </div>
             <div className="checkBoxElem">
               <input id="showAuth" type="checkbox" value={page.showAuth} />

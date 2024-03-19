@@ -1,0 +1,110 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.previewDiv {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  padding-top: 4%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e6e6fa; /* Semi-transparent black background */
+  z-index: 9999; /* Make sure it's above other elements */
+}
+
+#previewTitle {
+  font-size: 90px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
+
+#previewSubTitle {
+  font-size: 50px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
+
+#previewBodyContent {
+  padding-top: 6%;
+  font-size: 30px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 50px;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  background-color: #ffffff;
+  overflow: hidden;
+  max-width: 300px; /* Optional: adjust the max-width to fit your layout */
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card-subtitle {
+  font-size: 16px;
+  color: #666;
+}

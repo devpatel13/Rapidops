@@ -24,7 +24,7 @@ const EditPage = () => {
         console.log(data.page);
         if (!data.isAuthenticated) {
           alert("Login first");
-          //   navigate("/login");
+          navigate("/login");
         } else {
           console.log(data.page);
           setPage(data.page);
@@ -83,6 +83,7 @@ const EditPage = () => {
       subTitle,
       slug,
       showAuth,
+      author,
       toBePublished,
       publishDate,
       publishTime,
@@ -103,8 +104,8 @@ const EditPage = () => {
           subTitle,
           bodyContent,
           slug,
-          modifiedBy: "a",
           showAuth,
+          author,
           toBePublished,
           publishDate,
           publishTime,
@@ -152,19 +153,11 @@ const EditPage = () => {
           title: page.title,
           subTitle: page.subTitle,
           bodyContent: page.bodyContent,
+          author: page.author,
         })
       );
-      //   navigate("/previewpage", {
-      //     state: {
-      //       page: page,
-      //       isPreviewable: true,
-      //       fromEditPage: true,
-      //     },
-      //   });
       window.open("/previewpage", "_blank");
     }
-
-    // console.log(page);
   };
 
   const handleDelete = async () => {
@@ -274,7 +267,7 @@ const EditPage = () => {
             </div>
             <div className="pageMetaContentElem">
               <label htmlFor="author">Author:</label>
-              <h2 id="author">Adam</h2>
+              <h2 id="author">{page.author}</h2>
             </div>
             <div className="checkBoxElem">
               <input id="showAuth" type="checkbox" value={page.showAuth} />

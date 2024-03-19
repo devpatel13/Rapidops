@@ -15,15 +15,8 @@ const PreviewPage = () => {
 
   const [page, setPage] = useState({ title, subtitle, bodyContent });
 
-  const goToEditPage = () => {
-    // navigate("/");
-  };
-
   return (
     <>
-      <button type="button" id="backButton" onClick={goToEditPage}>
-        Back
-      </button>
       <div className="previewDiv">
         <div id="previewTitle">{page.title}</div>
         <div id="previewSubTitle">{page.subTitle}</div>

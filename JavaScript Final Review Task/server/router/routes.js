@@ -27,16 +27,27 @@ router.get("/blogpage/:slug", async (req, res) => {
   if (slugExists) {
     const currenDate = Date.now();
     if (slugExists.publishTime < currenDate)
-      res.status(200).json({ slug: "Page published" });
-    else res.status(200).json({ slug: "Page scheduled" });
+      res.status(200).json({ slug: "Page published", page: slugExists });
+    else res.status(404).json({ error: "Page does not exists" });
   } else res.status(404).json({ error: "Page does not exists" });
 });
 router.get("/allpages", authenticate, async (req, res) => {
   const allPages = await Page.find();
   res.json({ pages: allPages, isAuthenticated: true });
 });
+
+router.get("/allpublishedpages", async (req, res) => {
+  const currTime = Date.now();
+  const allPages = await Page.find({
+    publishTime: {
+      $lt: currTime,
+    },
+  });
+  res.json({ pages: allPages, isAuthenticated: true });
+});
+
 router.get("/addpage", authenticate, (req, res) => {
-  res.status(200).json({ isAuthenticated: true });
+  res.status(200).json({ isAuthenticated: true, username: req.user.username });
 });
 router.get("/editpage/:id", authenticate, async (req, res) => {
   try {
@@ -88,11 +99,12 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/addpage", authenticate, async (req, res) => {
-  const { title, subTitle, bodyContent, slug } = req.body;
+  const { title, subTitle, bodyContent, slug, author } = req.body;
   // console.log(req.user);
-  const createdBy = req.user.username;
+  const createdBy = req.user.token.id;
   // const createdBy = "a";
-  if (!title || !subTitle || !bodyContent || !slug || !createdBy)
+  console.log(createdBy);
+  if (!title || !subTitle || !bodyContent || !slug || !createdBy || !author)
     return res.status(401).json({ error: "Fill all the required fields" });
 
   try {
@@ -152,6 +164,7 @@ router.post("/addpage", authenticate, async (req, res) => {
       publishTime: publishDateObject,
       toBePublished,
       createdBy,
+      author,
       createdAt,
     });
     console.log(page);
@@ -164,14 +177,16 @@ router.post("/addpage", authenticate, async (req, res) => {
 // registration using username, Can change later
 router.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password)
-      return res.status(400).json({ error: "Please enter username/password" });
+    if (!email || !password)
+      return res.status(400).json({ error: "Please enter email/password" });
 
-    const userExist = await User.findOne({ username });
+    const userExist = await User.findOne({ email });
 
-    if (userExist) {
+    if (userExist != null && userExist) {
+      console.log("in", userExist);
+
       const isPasswordMatched = await bcrypt.compare(
         password,
         userExist.password
@@ -199,11 +214,16 @@ router.post("/login", async (req, res) => {
           success: true,
         });
       }
-    } else res.status(401).json({ error: "Invalid Credentials" });
+    } else res.status(402).json({ error: "Invalid Credentials" });
   } catch (error) {
+    // console.log("in");
     console.log(error);
-    return res.status(401).json({ error });
+    return res.status(401).json({ error: error });
   }
+});
+router.get("/logout", (req, res) => {
+  res.clearCookie("user");
+  res.status(200).json({ message: "OK" });
 });
 
 router.delete("/allpages/:pageID", async (req, res) => {
@@ -224,12 +244,14 @@ router.delete("/allpages/:pageID", async (req, res) => {
   }
 });
 
-router.put("/editpage/:pageID", async (req, res) => {
+router.put("/editpage/:pageID", authenticate, async (req, res) => {
   const pageID = req.params.pageID;
-  const { title, subTitle, bodyContent, slug, modifiedBy, publishTime } =
-    req.body;
+  // console.log(req.user.token.id);
+  const modifiedBy = req.user.token.id;
+  const modifiedByName = req.user.username;
+  const { title, subTitle, bodyContent, slug, publishTime } = req.body;
   console.log(req.body);
-  if (!title || !subTitle || !bodyContent || !modifiedBy)
+  if (!title || !subTitle)
     return res.status(401).json({ error: "Fill all the required fields" });
 
   try {
@@ -287,6 +309,7 @@ router.put("/editpage/:pageID", async (req, res) => {
           showAuth,
           modifiedAt,
           modifiedBy,
+          modifiedByName,
           toBePublished,
           publishTime: publishDateObject,
         },

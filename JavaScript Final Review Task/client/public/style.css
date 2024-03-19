@@ -334,6 +334,7 @@ a {
 
 .addPageContent {
   display: flex;
+  /* flex-direction: column; */
 }
 
 #addPageForm {
@@ -594,7 +595,7 @@ td {
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  padding-top: 10%;
+  padding-top: 4%;
   top: 0;
   left: 0;
   width: 100%;
@@ -616,7 +617,20 @@ td {
 }
 
 #previewBodyContent {
+  padding-top: 6%;
   font-size: 30px;
   font-weight: 600;
   font-family: "Courier New", Courier, monospace;
+}
+
+.attachements {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 150px;
+  border: none;
+}
+.attachements input {
+  border: none !important;
+  width: 350px !important;
 }
