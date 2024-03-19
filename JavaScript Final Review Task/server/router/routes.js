@@ -38,6 +38,16 @@ router.get("/allpages", authenticate, async (req, res) => {
 router.get("/addpage", authenticate, (req, res) => {
   res.status(200).json({ isAuthenticated: true });
 });
+router.get("/editpage/:id", authenticate, async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const page = await Page.findOne({ _id: id });
+    console.log(page);
+    if (!page) return res.status(401).json({ error: "Page Not Found" });
+    else res.status(200).json({ page, isAuthenticated: true });
+  } catch (error) {}
+});
 
 //post requests
 router.post("/signup", async (req, res) => {
@@ -81,6 +91,7 @@ router.post("/addpage", authenticate, async (req, res) => {
   const { title, subTitle, bodyContent, slug } = req.body;
   // console.log(req.user);
   const createdBy = req.user.username;
+  // const createdBy = "a";
   if (!title || !subTitle || !bodyContent || !slug || !createdBy)
     return res.status(401).json({ error: "Fill all the required fields" });
 
@@ -106,20 +117,27 @@ router.post("/addpage", authenticate, async (req, res) => {
           .status(401)
           .json({ error: "publish date and publish time are required" });
       else {
-        const [day, month, year] = publishDate.split("/");
+        const [year, month, day] = publishDate.split("-");
         // console.log(publishTime);
-        const [hours, minutes, period] = publishTime.split(":");
+        const [hours, minutes] = publishTime.split(":");
         let parsedHours = parseInt(hours);
-        if (period.toLowerCase() === "am" && parsedHours === 12)
-          parsedHours = 0;
-        else if (period.toLowerCase() === "pm" && parsedHours !== 12)
-          parsedHours += 12;
+        // if (period.toLowerCase() === "am" && parsedHours === 12)
+        //   parsedHours = 0;
+        // else if (period.toLowerCase() === "pm" && parsedHours !== 12)
+        //   parsedHours += 12;
+        console.log(
+          parseInt(year),
+          parseInt(month) - 1,
+          parseInt(day),
+          parsedHours,
+          parseInt(minutes)
+        );
 
         publishDateObject = new Date(
           parseInt(year),
-          parseInt(month - 1),
+          parseInt(month) - 1,
           parseInt(day),
-          parsedHours,
+          parseInt(hours),
           parseInt(minutes)
         ).getTime();
       }
@@ -136,6 +154,7 @@ router.post("/addpage", authenticate, async (req, res) => {
       createdBy,
       createdAt,
     });
+    console.log(page);
 
     if (page) res.status(201).json({ success: "page created" });
   } catch (error) {
@@ -187,8 +206,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.delete("/addpage/:pageID", async (req, res) => {
+router.delete("/allpages/:pageID", async (req, res) => {
   const pageID = req.params.pageID;
+  console.log(pageID);
 
   if (!pageID) res.send(400).json({ error: "id not found" });
 
@@ -204,16 +224,19 @@ router.delete("/addpage/:pageID", async (req, res) => {
   }
 });
 
-router.put("/addpage/:pageID", async (req, res) => {
+router.put("/editpage/:pageID", async (req, res) => {
   const pageID = req.params.pageID;
-  const { title, subTitle, bodyContent, slug, modifiedBy } = req.body;
+  const { title, subTitle, bodyContent, slug, modifiedBy, publishTime } =
+    req.body;
+  console.log(req.body);
   if (!title || !subTitle || !bodyContent || !modifiedBy)
     return res.status(401).json({ error: "Fill all the required fields" });
 
   try {
     if (slug) {
       const slugExists = await Page.findOne({ slug });
-      if (slugExists)
+      console.log(slugExists);
+      if (slugExists && slugExists.slug !== slug)
         return res.status(409).json({ error: "Slug already exists" });
       // else slug = slugExists.slug;
     }
@@ -224,7 +247,8 @@ router.put("/addpage/:pageID", async (req, res) => {
     if (!toBePublished) {
       toBePublished = false;
       publishDateObject = 0;
-    } else {
+    } else if (publishTime) publishDateObject = publishTime;
+    else {
       const { publishDate, publishTime } = req.body;
       if (!publishDate || !publishTime)
         return res
@@ -272,6 +296,24 @@ router.put("/addpage/:pageID", async (req, res) => {
     if (isUpdated.modifiedCount) {
       res.status(200).json({ message: "Page updated", status: isUpdated });
     } else res.status(401).json({ error: "Error updating page" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.delete("/editpage/:pageID", async (req, res) => {
+  const pageID = req.params.pageID;
+  console.log(pageID);
+
+  if (!pageID) res.send(400).json({ error: "id not found" });
+
+  try {
+    const isDeleted = await Page.deleteOne({ _id: pageID });
+    if (isDeleted.deletedCount)
+      return res
+        .status(200)
+        .json({ message: "page deleted", status: isDeleted });
+    else return res.status(422).json({ error: "Page not deleted" });
   } catch (error) {
     console.log(error);
   }

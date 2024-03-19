@@ -1,39 +1,36 @@
 import { React, useState, useEffect } from "react";
-import { resolvePath, useNavigate } from "react-router-dom";
+import { resolvePath, useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import gearLogo from "../img/gear.png";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Dropdown } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill, { Quill } from "react-quill";
+
 // import TextEditor from "./TextEditor";
-const AddPage = () => {
+const EditPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const id = location.state.id;
+
+  const [page, setPage] = useState([]);
 
   useEffect(() => {
-    fetch("/addpage", {
+    console.log(id);
+    fetch(`/editpage/${id}`, {
       method: "GET",
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data.page);
         if (!data.isAuthenticated) {
           alert("Login first");
-          navigate("/login");
+          //   navigate("/login");
+        } else {
+          console.log(data.page);
+          setPage(data.page);
         }
       });
   }, []);
-
-  const [page, setPage] = useState({
-    title: "",
-    subTitle: "",
-    bodyContent: "",
-    slug: "",
-    createdBy: "",
-    showAuth: false,
-    toBePublished: false,
-    publishDate: undefined,
-    publishTime: undefined,
-  });
 
   const [content, setContent] = useState("");
   const [show, setShow] = useState(false);
@@ -78,7 +75,7 @@ const AddPage = () => {
     "image",
   ];
 
-  const postPage = async (e) => {
+  const updatePage = async (e) => {
     e.preventDefault();
 
     const {
@@ -95,8 +92,8 @@ const AddPage = () => {
     console.log(toBePublished);
 
     try {
-      const response = await fetch("/addpage", {
-        method: "POST",
+      const response = await fetch(`/editpage/${id}`, {
+        method: "PUT",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -106,7 +103,7 @@ const AddPage = () => {
           subTitle,
           bodyContent,
           slug,
-          //   createdBy,
+          modifiedBy: "a",
           showAuth,
           toBePublished,
           publishDate,
@@ -120,8 +117,8 @@ const AddPage = () => {
           alert("Fill all the Fields");
         else if (response.status === 409 || !isPageAdded)
           alert("The URL already exists");
-        else if (response.status === 201) {
-          alert("Page created");
+        else if (response.status === 200) {
+          alert("Page Updated");
           navigate("/allpages");
         }
       }
@@ -137,13 +134,54 @@ const AddPage = () => {
   const publishPage = async (e) => {
     e.preventDefault();
     setPage({ ...page, toBePublished: true });
-    postPage(e);
+    updatePage(e);
     handleClose();
   };
   const handleClose = () => {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+
+  const handlePreview = () => {
+    console.log("Preview clicked");
+    if (!page.title) alert("Title is necessary for Preview");
+    else {
+      localStorage.setItem(
+        "blogData",
+        JSON.stringify({
+          title: page.title,
+          subTitle: page.subTitle,
+          bodyContent: page.bodyContent,
+        })
+      );
+      //   navigate("/previewpage", {
+      //     state: {
+      //       page: page,
+      //       isPreviewable: true,
+      //       fromEditPage: true,
+      //     },
+      //   });
+      window.open("/previewpage", "_blank");
+    }
+
+    // console.log(page);
+  };
+
+  const handleDelete = async () => {
+    console.log("Delete clicked");
+    const response = await fetch(`/editpage/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      alert("Page deleted");
+      navigate("/allpages");
+    } else alert("Page not deleted");
+  };
 
   return (
     <>
@@ -153,15 +191,29 @@ const AddPage = () => {
           <div className="addPageHeaderContent">
             <i className="fa-solid fa-chevron-left"></i>
             <div>
-              <h3>Untitled Document</h3>
+              <h3>{page.title}</h3>
             </div>
           </div>
           <div className="addPageHeaderButtons">
-            <img src={gearLogo} />
+            {/* <img src={gearLogo} /> */}
+            <Dropdown>
+              <Dropdown.Toggle variant="link" id="dropdown-basic">
+                <img
+                  src={gearLogo}
+                  alt="Three dots"
+                  style={{ width: "20px" }}
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={handlePreview}>Preview</Dropdown.Item>
+                <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <button type="button" id="cancelBtn" onClick={goToAllPage}>
               Cancel
             </button>
-            <button type="button" id="saveBtn" onClick={postPage}>
+            <button type="button" id="saveBtn" onClick={updatePage}>
               Save
             </button>
             <button type="button" id="previewBtn" onClick={handleShow}>
@@ -176,7 +228,7 @@ const AddPage = () => {
               <input
                 id="title"
                 type="text"
-                placeholder="Title"
+                placeholder={page.title}
                 value={page.title}
               />
             </div>
@@ -185,7 +237,7 @@ const AddPage = () => {
               <input
                 id="subTitle"
                 type="text"
-                placeholder="Subtitle"
+                placeholder={page.subTitle}
                 value={page.subTitle}
               />
             </div>
@@ -216,7 +268,7 @@ const AddPage = () => {
               <input
                 id="slug"
                 type="text"
-                placeholder="/URL"
+                placeholder={page.slug}
                 value={page.slug}
               />
             </div>
@@ -264,4 +316,4 @@ const AddPage = () => {
   );
 };
 
-export default AddPage;
+export default EditPage;

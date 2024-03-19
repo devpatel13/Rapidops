@@ -1,0 +1,622 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  /* padding: 48px 0 0; */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-sticky {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  /* height: 900px; */
+  width: 64px;
+  padding: 8px 8px 12px 8px;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+#navItem2 {
+  display: flex;
+  flex-direction: column;
+  column-gap: 12px;
+  align-items: center;
+}
+
+#navItem3 {
+  display: flex;
+  flex-direction: column;
+  column-gap: 20px;
+  height: 90px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 700px;
+}
+
+.sidebarImgs {
+  height: 40px;
+  width: 40px;
+}
+
+.addPageDiv {
+  position: relative;
+  display: flex;
+  width: 1136px;
+  height: 424px;
+  left: 354px;
+  top: 246px;
+  border: 1px solid #e1e1e8;
+  border-radius: 10px;
+  padding: 32px 32px 32px 64px;
+}
+
+.addPageDivText {
+  position: relative;
+  top: 107px;
+  left: 14px;
+  width: 540px;
+  height: 130px;
+}
+
+.addPageDivText h3 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.addPageDivText p {
+  font-size: 14px;
+}
+
+.addPageDivText button {
+  font-size: 14px;
+  width: 111px;
+  height: 32px;
+  background-color: #4f46e5;
+  color: white;
+  border-radius: 5px;
+  margin-top: 32px;
+  padding: 7px 12px;
+}
+
+.signInLoginDiv {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 720px;
+  height: 583px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 64px;
+}
+
+.signInLoginFormDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 720px;
+  padding: 32px;
+  border: 1px solid #e1e1e8;
+  border-radius: 5px;
+}
+
+.signInLoginFormDiv h2 {
+  font-size: 28px;
+  font-weight: 510px;
+  color: black;
+  margin-bottom: 32px;
+}
+
+.signInLoginFormDiv form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.signInLoginFormDiv label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  /* color: gray; */
+}
+
+.input-field {
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 2px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+#isSubscribedCheckbox {
+  margin-left: 6px;
+  color: gray;
+  margin-bottom: 8px;
+}
+
+.signInLoginFormDiv p {
+  color: gray;
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+
+.signInLoginFormDiv button {
+  width: 82px;
+  height: 32px;
+  border-radius: 4px;
+  background-color: #4f46e5;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 32px;
+}
+
+#linkToSignupLogin {
+  margin-bottom: 10px;
+}
+
+.allPagesHeader {
+  position: relative;
+  display: flex;
+  width: 96.5%;
+  height: 92px;
+  left: 64px;
+  padding: 24px 32px;
+  gap: 16px;
+  border: 1px solid #e1e1e8;
+}
+
+.allPagesHeader img {
+  height: 24px;
+  width: 24px;
+}
+
+.allPagesheaderContent {
+  display: flex;
+  flex-direction: column;
+  column-gap: 4px;
+  font-size: 20px;
+}
+
+.allPagesheaderContent p {
+  font-size: 13px;
+  width: 1545px;
+  color: gray;
+}
+
+.allPagesHeader button {
+  width: 111px;
+  height: 32px;
+  padding: 7px 12px 7px 12px;
+  padding: 7px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #4f46e5;
+  color: white;
+}
+
+.allPagesSearchMenu {
+  position: fixed;
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  height: 34px;
+  top: 116px;
+  left: 88px;
+}
+
+.allPagesSearchMenu p {
+  font-size: 12px;
+  color: gray;
+  margin: 7px 0px;
+  width: 54px;
+}
+
+.searchBar {
+  display: flex;
+  width: 240px;
+  height: 34px;
+  padding: 8px 8px 8px 12px;
+  gap: 10px;
+  border-radius: 4px;
+  border: 1px solid #e1e1e8;
+}
+
+.searchBar img {
+  height: 16px;
+  width: 16px;
+}
+
+.searchBar input {
+  border: none;
+  width: 194px;
+  height: 16px;
+  /* font-family: SF Pro; */
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 0;
+  padding-left: 0;
+}
+
+.filterTab {
+  width: 1337px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 34px;
+  gap: 24px;
+  font-size: 14px;
+  color: gray;
+}
+
+.filterTabCreatedBy {
+  display: flex;
+}
+.filterTabCreatedBy p {
+  width: 74px;
+}
+
+.filterTabStatus {
+  display: flex;
+}
+
+.searchSelect {
+  height: 34px !important;
+  width: auto;
+}
+
+.addPageHeader {
+  position: relative;
+  display: flex;
+  width: 96.5%;
+  height: 80px;
+  left: 64px;
+  padding: 24px 32px;
+  gap: 16px;
+  border: 1px solid #e1e1e8;
+  justify-content: space-between;
+}
+
+.addPageHeaderContent {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-weight: 700;
+  /* width: 973px; */
+}
+
+.addPageHeaderButtons {
+  display: flex;
+  gap: 16px;
+}
+
+.addPageHeaderButtons button {
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.addPageHeaderButtons img {
+  height: 20px;
+  width: 20px;
+  margin-top: 5px;
+}
+
+#cancelBtn {
+  border: 1px solid #e1e1e8;
+  padding: 7px 12px;
+  height: 32px;
+}
+
+#saveBtn {
+  padding: 7px 12px;
+  height: 32px;
+  background-color: #4f46e5;
+  color: white;
+}
+
+#previewBtn {
+  padding: 7px 12px;
+  height: 32px;
+  background-color: #059669;
+  color: white;
+}
+
+.addPageContent {
+  display: flex;
+}
+
+#addPageForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 1292px;
+  height: 698px;
+  top: 44px;
+  left: 98px;
+  gap: 32px;
+}
+
+.formElem {
+  display: flex;
+  flex-direction: column;
+  height: 60px;
+  gap: 8px;
+}
+
+#addPageForm label {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+#addPageForm input {
+  width: 100%;
+  border: 1px solid #e1e1e8;
+  height: 34px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.pageMetaContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 376px;
+  height: 885px;
+  top: auto;
+  left: 180px;
+  border: 1px solid #e1e1e8;
+}
+
+.pageMetaContentHead {
+  width: 376px;
+  height: 48px;
+  padding: 14px 16px;
+  gap: 16px;
+  /* font-family: SF Pro; */
+  font-size: 14px;
+  font-weight: 590;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+
+  /* border: 0 0 1 0 */
+}
+
+.pageMetaContentElem {
+  display: flex;
+  flex-direction: column;
+  width: 376px;
+  height: 60px;
+  padding: 0px 12px;
+  gap: 4px;
+}
+
+.pageMetaContentElem label {
+  /* font-family: SF Pro; */
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  color: gray;
+  text-align: left;
+}
+
+.pageMetaContentElem input {
+  width: 352px;
+  height: 34px;
+  padding: 8px 12px;
+  font-size: 14px;
+  gap: 10px;
+  border-radius: 4px;
+  border: 1px solid #d1d1db;
+}
+
+.pageMetaContentElem h2 {
+  width: 352px;
+  height: 34px;
+  padding: 8px 12px;
+  font-size: 14px;
+  gap: 10px;
+  color: gray;
+  border-radius: 4px;
+  border: 1px solid #d1d1db;
+}
+
+.checkBoxElem {
+  display: flex;
+  /* flex-direction: column; */
+  width: 376px;
+  height: 60px;
+  padding: 0px 12px;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  /* color: gray; */
+  text-align: left;
+}
+
+.checkBoxElem input {
+  height: 16px;
+  width: 16px;
+}
+
+.publishModal {
+  background-color: black;
+  color: white;
+  height: 56px;
+  /* font-family: SF Pro; */
+  font-size: 20px !important;
+  font-weight: 590 !important;
+  line-height: 24px !important;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.modalCloseBtn {
+  width: 71px;
+  height: 32px;
+  padding: 7px 12px;
+  /* gap: 6px; */
+  border-radius: 4px;
+  /* border: 1    */
+  color: black;
+  border: 1px solid #e1e1e8;
+  /* font-family: SF Pro; */
+  font-size: 14px;
+  font-weight: 510;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.modalCloseBtn:hover {
+  width: 71px;
+  height: 32px;
+  padding: 7px 12px;
+  /* gap: 6px; */
+  border-radius: 4px;
+  /* border: 1    */
+  background-color: gray;
+  border: 1px solid #e1e1e8;
+}
+
+.modalPublishBtn {
+  width: 74px;
+  height: 32px;
+  padding: 7px 12px;
+  border-radius: 4px;
+  color: white;
+  background-color: #059669 !important;
+  border: 1px solid #059669;
+  font-size: 14px;
+  font-weight: 510;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.modalPublishBtn:hover {
+  width: 74px;
+  height: 32px;
+  padding: 7px 12px;
+  /* gap: 6px; */
+  border-radius: 4px;
+  /* border: 1    */
+  background-color: #059669;
+}
+
+.modalBodyElem {
+  margin: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modalBodyElem label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.modalBodyElem input {
+  width: 432px;
+  height: 34px;
+  padding: 8px 12px;
+  /* gap: 10px */
+  border-radius: 4px;
+  border: 1px solid #e1e1e8;
+}
+
+.allPagesTable {
+  position: relative;
+  width: 1403px;
+  height: 200px;
+  top: 100px;
+  left: 90px;
+}
+
+.allPagesTable th,
+td {
+  border-top: 1px solid #e1e1e8;
+  border-bottom: 1px solid #e1e1e8;
+}
+
+.allPagesTable table {
+  width: 1667px;
+}
+
+.allPagesTable tr {
+  height: 44px;
+  font-size: 14px;
+  color: gray;
+}
+
+.allPagesTable tbody tr {
+  color: black;
+}
+
+.allPagesTableTitle {
+  color: #4f46e5;
+}
+
+#dropdown-basic-button {
+  background-color: white;
+  border: none;
+  color: #4f46e5;
+  /* font-family: SF Pro; */
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.previewDiv {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  padding-top: 10%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e6e6fa; /* Semi-transparent black background */
+  z-index: 9999; /* Make sure it's above other elements */
+}
+
+#previewTitle {
+  font-size: 90px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
+
+#previewSubTitle {
+  font-size: 50px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
+
+#previewBodyContent {
+  font-size: 30px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
