@@ -11,11 +11,7 @@ const User = require("../models/userSchema");
 const Page = require("../models/pageSchema");
 
 // get requests
-router.get("/", (req, res) => {
-  // res.redirect('/home');
-  // logic to check if the user have any pages if not then redirect to homepage
-  // or else redirect to home page
-});
+router.get("/", (req, res) => {});
 // router.get('/home')
 router.get("/signup", (req, res) => {
   res.status(200).send("Signup");
