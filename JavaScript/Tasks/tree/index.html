@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Family Tree</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="tree">
+        <ul id="family-tree">
+          <li class="nonLeafNode">
+            <a href="#" id="1">1</a>
+            <ul>
+              <li class="nonLeafNode">
+                <a href="#" id="2">2</a>
+                <ul>
+                  <li class="nonLeafNode">
+                    <a href="#" id="2a">2a</a>
+                    <ul>
+                      <li class="leafNode"><a href="#" id="2a1">2a1</a></li>
+                      <li class="leafNode"><a href="#" id="2a2">2a2</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <!-- <input type="text" id="newNodeName" placeholder="Enter node name" /> -->
+      <button onclick="saveData()">Save</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script2.js"></script>
+  </body>
+</html>
