@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Family Tree</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="menu">
+        <input type="number" name="nodeInput" id="nodeInput" />
+        <button onclick="addNode()">Add</button>
+        <button onclick="heapSort()">Sort</button>
+      </div>
+
+      <div class="tree">
+        <ul>
+          <li id="root"></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <!-- <input type="text" id="newNodeName" placeholder="Enter node name" /> -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
