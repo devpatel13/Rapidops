@@ -29,7 +29,9 @@ function addCourse() {
 
   if (flag) {
     let selectedUsers = document.getElementById("studentName").selectedOptions;
-    let studentToCourseMap = localStorage.getItem("studentToCourseMap");
+    let studentToCourseMap = JSON.parse(
+      localStorage.getItem("studentToCourseMap")
+    );
     let newStudentToCourseMap = [];
     console.log(selectedUsers);
     let courses = localStorage.courses;
@@ -57,6 +59,7 @@ function addCourse() {
         studentToCourseMap != "null" &&
         studentToCourseMap != "undefined"
       ) {
+        // studentToCourseMap
         studentToCourseMap.forEach((elem) => {
           if (!(elem[1] === coursename)) newStudentToCourseMap.push(elem);
         });

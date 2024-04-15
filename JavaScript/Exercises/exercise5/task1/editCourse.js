@@ -22,7 +22,7 @@ if (
     option.addEventListener("click", (e) => {
       changeAssignment(e);
     });
-    if (elem[1] === "Java")
+    if (elem[1] === coursename)
       document.getElementById("assignedStudentName").append(option);
     else {
       document.getElementById("notAssignedStudentName").append(option);
