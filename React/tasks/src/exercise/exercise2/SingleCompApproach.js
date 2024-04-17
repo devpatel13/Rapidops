@@ -130,17 +130,12 @@ export class SingleCompApproach extends Component {
               placeholder={this.state.firstName}
               id="fname"
               className="form-control"
-
-              //   value={this.state.firstName}
-              //   onChange={(e) => this.setState({ firstName: e.target.value })}
             />
             <input
               type="text"
               placeholder={this.state.lastName}
               id="lname"
               className="form-control"
-              //   value={this.state.lastName}
-              //   onChange={(e) => this.setState({ lastName: e.target.value })}
             />
             <button
               type="button"
@@ -186,7 +181,6 @@ export class SingleCompApproach extends Component {
                     className="btn btn-info me-1 btn-sm px-3 edit"
                     value="edit"
                     onClick={() => {
-                      //   e.preventDefault();
                       this.editName(index);
                     }}
                   >
@@ -196,7 +190,6 @@ export class SingleCompApproach extends Component {
                     type="button"
                     className="btn btn-danger btn-sm delete"
                     value="delete"
-                    // id="deleteBtn"
                     onClick={(event) => this.deleteName(event, index)}
                   >
                     Delete
