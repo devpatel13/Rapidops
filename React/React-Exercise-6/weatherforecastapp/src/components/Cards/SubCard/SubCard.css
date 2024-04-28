@@ -1,0 +1,17 @@
+/* .sub-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%; 
+  padding: 10px;
+} */
+
+.sub-card {
+  width: 300px;
+  padding: 10px;
+  border: none; /* Remove the border */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #8b4513; /* Dark red color */
+  color: #fff; /* White text color for better contrast */
+}
