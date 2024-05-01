@@ -1,0 +1,14 @@
+.forecast-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.sub-cards {
+  display: flex;
+  gap: 20px;
+}

@@ -1,0 +1,48 @@
+/* .main-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; 
+  background-color: #8b4513; 
+  color: #fff; 
+  width: 80%; 
+  margin: auto; 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+.main-card-container {
+  padding-top: 1%;
+}
+
+.main-card {
+  width: 300px;
+  padding: 20px;
+  border: none; /* Remove the border */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #8b4513; /* Dark red color */
+  color: #fff; /* White text color for better contrast */
+}
+
+.main-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Adjust margin bottom */
+}
+
+.main-icon img {
+  width: 100px;
+  height: 100px;
+}
+
+.main-details {
+  text-align: center;
+}
+
+.temperature {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
