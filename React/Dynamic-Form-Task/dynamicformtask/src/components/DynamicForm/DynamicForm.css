@@ -1,0 +1,43 @@
+.formBox form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formBox label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.formBox input[type="text"],
+.formBox input[type="email"],
+.formBox input[type="password"],
+.formBox select {
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.formBox input[type="checkbox"],
+.formBox input[type="radio"] {
+  margin-right: 8px;
+}
+
+.formBox input[type="submit"] {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formBox input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.formBox select {
+  width: 100%;
+}

@@ -1,0 +1,4 @@
+.step-bar {
+  display: flex;
+  justify-content: space-around;
+}
