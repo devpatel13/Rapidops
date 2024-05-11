@@ -3,15 +3,11 @@ import formData from "../utils/FormData";
 import "./StepBar.css";
 
 export default function StepBar({ currentStep, totalSteps }) {
-  console.log(currentStep);
   const [steps, setSteps] = useState(totalSteps);
   return (
     <div className="step-bar">
       {[...Array(totalSteps).keys()].map((step, index) => (
-        <div
-          key={index}
-          // className={`step ${index < currentStep ? "completed" : ""}`}
-        >
+        <div key={index}>
           {index + 1 < currentStep ? (
             <i className="fa fa-check-circle"></i>
           ) : null}

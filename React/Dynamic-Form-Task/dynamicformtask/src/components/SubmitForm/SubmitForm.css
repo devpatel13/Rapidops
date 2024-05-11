@@ -1,0 +1,44 @@
+.user-data-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.user-data-container h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.data-container {
+  margin-top: 20px;
+}
+
+.step-container {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.step-container h3 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #007bff;
+}
+
+.content {
+  margin-top: 10px;
+}
+
+.key {
+  font-weight: bold;
+}
+
+.value {
+  color: #555;
+}

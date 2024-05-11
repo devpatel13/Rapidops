@@ -1,71 +1,98 @@
 import React, { useEffect, useState } from "react";
 import "./DynamicForm.css";
-import userEvent from "@testing-library/user-event";
 
 export default function DynamicForm({ data, setStepsCompleted }) {
   console.log(data);
-  const [formFields, setFormFields] = useState({
-    name: "",
-    label: "",
-    field_type: "",
-    options: [],
-    default_value: "",
-    placeholder: "",
-    validation: true,
-  });
   const [userResponses, setUserResponses] = useState({});
 
-  useEffect(() => {
+  // for initial user state
+  const initializeUserResponses = () => {
     const temp = {};
-    // console.log(data.fields);
-    data.fields.map((field) => {
-      const tempArr = [];
-      tempArr.push(field?.default_value || null);
-      tempArr.push(field.validation);
-      if (field.validation) tempArr.push(field?.regEx || "");
-      temp[field.name] = tempArr;
+    data.fields.forEach((field) => {
+      const tempObj = {
+        value: "",
+        validation: field.validation,
+        default_value: field.default_value || "",
+        regEx: field.validation ? field.regEx || "" : "",
+      };
+      temp[field.name] = tempObj;
     });
     setUserResponses(temp);
-  }, []);
+  };
 
+  useEffect(() => {
+    initializeUserResponses();
+  }, [data.currentStep]);
+
+  // handles the submit event, having two action: next and previous.
+  // the function on 'next' will iterate the userResponse and if validation is true and regEx provided
+  // then form subnitted.
+
+  // NOTE: If validation true and RegEx not provided, then execution is not stopped and data
+  // is considered as valid
   const handleSubmit = (action) => {
-    const temp = {};
+    const formData = {};
+
     if (action === "next") {
-      for (const response in userResponses) {
-        if (userResponses[response][1]) {
-          if (userResponses[response][2] instanceof RegExp) {
-            if (!userResponses[response][2].test(userResponses[response][0])) {
-              alert(`Invalid data for: ${response}`);
+      for (const responseKey in userResponses) {
+        const response = userResponses[responseKey];
+        const value = response && response.value;
+
+        if (value !== undefined) {
+          if (response.validation && response.regEx instanceof RegExp) {
+            if (!response.regEx.test(value)) {
+              alert(`Invalid data for: ${responseKey}`);
               return;
-            } else temp[response] = userResponses[response][0];
-          } else {
-            console.log(
-              `Invalid RegEx provided for ${response}, data validated`
-            );
-            temp[response] = userResponses[response][0];
+            }
           }
-        } else temp[response] = userResponses[response][0];
+
+          formData[responseKey] =
+            value !== undefined ? value : response.default_value;
+        }
       }
-      localStorage.setItem(data.steps.step, JSON.stringify(temp));
+
+      let savedData = localStorage.getItem("formData");
+      savedData = savedData ? JSON.parse(savedData) : {};
+      localStorage.setItem(
+        "formData",
+        JSON.stringify({
+          ...savedData,
+          [data.steps.step]: {
+            temp: formData,
+            title: data.steps?.title || "Details",
+          },
+        })
+      );
+
       setStepsCompleted(data.currentStep);
-    } else console.log("prev", userResponses);
+    } else {
+      setStepsCompleted(data.currentStep - 2);
+    }
   };
 
   const handleChange = (e) => {
-    const { value, checked, type } = e.target;
+    const { value, checked, type, name } = e.target;
     if (type === "checkbox") {
       const updatedValue = checked
-        ? [...userResponses[e.target.name][0], value]
-        : userResponses[e.target.name][0].filter((item) => item !== value);
+        ? [...userResponses[name].value, value]
+        : userResponses[name].value.filter((item) => item !== value);
       setUserResponses((prevState) => ({
         ...prevState,
-        [e.target.name]: [updatedValue, [e.target.name][1]],
+        [name]: {
+          value: updatedValue,
+          validation: [name].validation,
+          regEx: [name].regEx,
+        },
       }));
       console.log(updatedValue);
     } else {
       setUserResponses((prevState) => ({
         ...prevState,
-        [e.target.name]: [e.target.value, [e.target.name][1]],
+        [name]: {
+          value: e.target.value,
+          validation: [name].validation,
+          regEx: [name].regEx,
+        },
       }));
       console.log(value);
     }
@@ -78,7 +105,7 @@ export default function DynamicForm({ data, setStepsCompleted }) {
       <form>
         {data.fields.map((field, index) => {
           if (field.field_type === "checkbox" || field.field_type === "radio") {
-            if (data.options === undefined) {
+            if (field.options === undefined) {
               return (
                 <div className="formField" key={index}>
                   <div key={"emptyCheckbox"}>
@@ -86,7 +113,7 @@ export default function DynamicForm({ data, setStepsCompleted }) {
                       type={field.field_type}
                       id={"emptyCheckbox"}
                       name={field.name}
-                      value={"emptyCheckbox"}
+                      value={field?.default_value || false}
                       onChange={handleChange}
                     />
                     <label htmlFor={"emptyCheckbox"}>{field.label}</label>
@@ -104,6 +131,9 @@ export default function DynamicForm({ data, setStepsCompleted }) {
                         name={field.name}
                         value={option}
                         onChange={handleChange}
+                        defaultChecked={
+                          userResponses[field.name] ? true : false
+                        }
                       />
                       <label htmlFor={option}>{option}</label>
                     </div>
@@ -118,7 +148,9 @@ export default function DynamicForm({ data, setStepsCompleted }) {
                 <select
                   id={field.name}
                   name={field.name}
-                  value={field.default_value}
+                  value={
+                    userResponses[field.name]?.value || field.default_value
+                  }
                   onChange={handleChange}
                 >
                   <option value="">{field.placeholder}</option>
@@ -138,7 +170,7 @@ export default function DynamicForm({ data, setStepsCompleted }) {
                   type={field.field_type}
                   id={field.name}
                   name={field.name}
-                  value={userResponses[field.name]?.[0] || ""}
+                  value={userResponses[field.name]?.value || ""}
                   placeholder={field.placeholder}
                   onChange={handleChange}
                 />
@@ -148,7 +180,7 @@ export default function DynamicForm({ data, setStepsCompleted }) {
         })}
       </form>
       <div className="buttonGroup" style={{ marginTop: "20px" }}>
-        {data.current > 1 ? (
+        {data.currentStep > 1 && !data.isLastPage ? (
           <button
             type="button"
             form="dynamicForm"
@@ -163,82 +195,9 @@ export default function DynamicForm({ data, setStepsCompleted }) {
           form="dynamicForm"
           onClick={() => handleSubmit("next")}
         >
-          Next
+          {data.isLastPage ? "Submit" : "Next"}
         </button>
       </div>
     </div>
   );
 }
-
-// const data = {
-//   name: "paymentMethod",
-
-//   label: "Payment Method",
-
-//   field_type: "select",
-
-//   options: ["Credit Card", "PayPal", "Bank Transfer"],
-
-//   default_value: "Credit Card",
-
-//   placeholder: "Select Payment Method",
-
-//   validation: true,
-// };
-
-// if (
-//   formFields.field_type === "checkbox" ||
-//   formFields.field_type === "radio"
-// ) {
-//   return (
-//     <div className="formField">
-//       {formFields.options.map((option, index) => (
-//         <div key={index}>
-//           <input
-//             type={formFields.field_type}
-//             id={option}
-//             name={formFields.name}
-//             value={option}
-//             onChange={handleChange}
-//           />
-//           <label htmlFor={option}>{option}</label>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// } else if (formFields.field_type === "select") {
-//   return (
-//     <div>
-//       <label htmlFor={formFields.name}>{formFields.label}</label>
-//       <select
-//         id={formFields.name}
-//         name={formFields.name}
-//         value={formFields.default_value}
-//         onChange={handleChange}
-//       >
-//         <option value="">{formFields.placeholder}</option>
-//         {formFields.options.map((option) => (
-//           <option key={option} value={option}>
-//             {option}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   );
-// } else {
-//   return (
-//     <div className="formField">
-//       <div>
-//         <label htmlFor={formFields.name}>{formFields.label}</label>
-//         <input
-//           type={formFields.field_type}
-//           id={formFields.name}
-//           name={formFields.name}
-//           value={userResponses}
-//           placeholder={formFields.placeholder}
-//           onChange={handleChange}
-//         />
-//       </div>
-//     </div>
-//   );
-// }
