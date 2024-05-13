@@ -2,15 +2,21 @@ import React, { useEffect, useState } from "react";
 import "./DynamicForm.css";
 
 export default function DynamicForm({ data, setStepsCompleted }) {
-  console.log(data);
+  // console.log(data);
   const [userResponses, setUserResponses] = useState({});
 
   // for initial user state
   const initializeUserResponses = () => {
     const temp = {};
+    const storedData = JSON.parse(localStorage.getItem("formData") || "{}");
     data.fields.forEach((field) => {
       const tempObj = {
-        value: "",
+        value:
+          // this line checks if there is an entry for the current step in the
+          // local storage and if there, it stores it as value and shows it
+          storedData[data.steps.step]?.formData[field.name] ||
+          field.default_value ||
+          "",
         validation: field.validation,
         default_value: field.default_value || "",
         regEx: field.validation ? field.regEx || "" : "",
@@ -45,12 +51,12 @@ export default function DynamicForm({ data, setStepsCompleted }) {
               return;
             }
           }
-
           formData[responseKey] =
-            value !== undefined ? value : response.default_value;
+            value !== undefined && value !== ""
+              ? value
+              : response.default_value;
         }
       }
-
       let savedData = localStorage.getItem("formData");
       savedData = savedData ? JSON.parse(savedData) : {};
       localStorage.setItem(
@@ -58,7 +64,7 @@ export default function DynamicForm({ data, setStepsCompleted }) {
         JSON.stringify({
           ...savedData,
           [data.steps.step]: {
-            temp: formData,
+            formData: formData,
             title: data.steps?.title || "Details",
           },
         })
@@ -89,12 +95,12 @@ export default function DynamicForm({ data, setStepsCompleted }) {
       setUserResponses((prevState) => ({
         ...prevState,
         [name]: {
-          value: e.target.value,
-          validation: [name].validation,
-          regEx: [name].regEx,
+          value: e.target.value !== "" ? e.target.value : "",
+          validation: userResponses[name].validation || false,
+          regEx: userResponses[name].regEx || "",
+          default_value: userResponses[name].default_value || "",
         },
       }));
-      console.log(value);
     }
   };
 
@@ -113,7 +119,7 @@ export default function DynamicForm({ data, setStepsCompleted }) {
                       type={field.field_type}
                       id={"emptyCheckbox"}
                       name={field.name}
-                      value={field?.default_value || false}
+                      value={field?.default_value || true}
                       onChange={handleChange}
                     />
                     <label htmlFor={"emptyCheckbox"}>{field.label}</label>

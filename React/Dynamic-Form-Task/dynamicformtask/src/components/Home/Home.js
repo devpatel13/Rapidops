@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import formData from "../utils/FormData";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import StepBar from "../StepBar/StepBar";
@@ -23,10 +23,10 @@ export default function Home() {
   // data that will be sent to the DynamicForm is updated here
   const updateFormData = () => {
     const temp = {
-      fields: formData.fields[`step${stepsCompleted + 1}`] || [],
-      steps: formData.steps[stepsCompleted] || "",
+      fields: formData?.fields[`step${stepsCompleted + 1}`] || [],
+      steps: formData?.steps[stepsCompleted] || "",
       currentStep: stepsCompleted + 1,
-      isLastPage: stepsCompleted === formData.steps.length - 1,
+      isLastPage: stepsCompleted === formData?.steps.length - 1,
     };
     setData(temp);
   };

@@ -6,6 +6,7 @@ export default function SubmitForm() {
 
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
+    console.log(storedData);
     if (storedData) {
       setUserData(JSON.parse(storedData));
     }
@@ -18,18 +19,20 @@ export default function SubmitForm() {
         {userData ? (
           Object.entries(userData).map(
             ([stepKey, stepData], index) =>
-              Object.keys(stepData?.temp || 0).length > 0 && (
+              Object.keys(stepData?.formData || 0).length > 0 && (
                 <div key={index} className="step-container">
                   <h3>{stepData.title}</h3>
                   <div className="content">
-                    {Object.entries(stepData.temp).map(([key, value], idx) => (
-                      <div key={idx}>
-                        <span className="key">{key}:</span>{" "}
-                        <span className="value">
-                          {Array.isArray(value) ? value.join(", ") : value}
-                        </span>
-                      </div>
-                    ))}
+                    {Object.entries(stepData.formData).map(
+                      ([key, value], idx) => (
+                        <div key={idx}>
+                          <span className="key">{key}:</span>{" "}
+                          <span className="value">
+                            {Array.isArray(value) ? value.join(", ") : value}
+                          </span>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               )

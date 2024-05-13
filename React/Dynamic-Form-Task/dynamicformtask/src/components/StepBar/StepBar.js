@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import formData from "../utils/FormData";
 import "./StepBar.css";
 
 export default function StepBar({ currentStep, totalSteps }) {
-  const [steps, setSteps] = useState(totalSteps);
   return (
     <div className="step-bar">
       {[...Array(totalSteps).keys()].map((step, index) => (
