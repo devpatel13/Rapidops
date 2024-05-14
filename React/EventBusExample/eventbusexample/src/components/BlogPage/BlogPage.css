@@ -1,0 +1,15 @@
+.blog-container {
+  max-width: 800px; /* Set maximum width */
+  margin: 20px auto; /* Center align and add margin */
+  padding: 0 20px; /* Add padding */
+}
+
+.blog-title {
+  font-size: 32px; /* Large font size for title */
+  margin-bottom: 20px; /* Add space below title */
+}
+
+.blog-content {
+  font-size: 18px; /* Medium font size for content */
+  line-height: 1.6; /* Increase line height for better readability */
+}

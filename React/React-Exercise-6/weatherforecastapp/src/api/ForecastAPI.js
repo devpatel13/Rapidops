@@ -38,7 +38,7 @@ const fetchData = async (city) => {
         wind: (elem.wind.speed * 3.6).toFixed(2),
       });
     });
-    return { status: 200, tempForecastList };
+    return { status: 200, forecastList: tempForecastList };
   } catch (error) {
     console.error(error);
     throw error;

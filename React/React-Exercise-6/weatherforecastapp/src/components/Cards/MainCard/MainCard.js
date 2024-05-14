@@ -2,6 +2,7 @@ import React from "react";
 import "./MainCard.css";
 
 const MainCard = ({ forecastObj }) => {
+  console.log("in");
   return (
     <div className="main-card-container">
       <div className="main-card">

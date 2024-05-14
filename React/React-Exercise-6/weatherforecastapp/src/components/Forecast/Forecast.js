@@ -14,7 +14,8 @@ export default function Forecast({ handleError }) {
       const getData = async () => {
         const tempForecastList = await fetchData(params.city);
         console.log(tempForecastList);
-        if (tempForecastList.status === 200) setForecastList(tempForecastList);
+        if (tempForecastList.status === 200)
+          setForecastList(tempForecastList.forecastList);
         else {
           console.error(tempForecastList.message);
           handleError({
