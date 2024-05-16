@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css"; // Import your CSS file for styling
 import eventBus from "../../utils/eventBus";
 
 const Navbar = () => {
+  const [cop, setCop] = useState("");
+  console.log("in");
   useEffect(() => {
     eventBus.subscribe((event) => {
       if (event.type === "TEXT_COPIED") handleEvent();
     });
   }, []);
-  const handleEvent = () =>
-    (document.getElementById("notifications").innerText = "Copied");
+  const handleEvent = () => setCop("copied");
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -17,7 +18,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-right">
         {/* Add notifications div here */}
-        <div className="notifications" id="notifications"></div>
+        <div className="notifications" id="notifications">
+          {cop}
+        </div>
       </div>
     </nav>
   );
