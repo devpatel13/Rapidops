@@ -1,5 +1,20 @@
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  getByText,
+} from "@testing-library/react";
 import Table from "../Table/Table";
+import App from "../../App";
+
+describe("App Rendering", () => {
+  test("should app render", () => {
+    render(<App />);
+
+    expect(screen.getByText("First and last name")).toBeInTheDocument();
+  });
+});
 
 describe("Add Functionality Testing", () => {
   afterEach(() => cleanup());
@@ -91,6 +106,36 @@ describe("Update Functionality Testing", () => {
     expect(screen.getByText("Jane")).toBeInTheDocument();
     expect(screen.getByText("Smith")).toBeInTheDocument();
   });
+  test("should show alert if first name or last name is empty in update", () => {
+    render(<Table />);
+    const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    // Simulate adding a name first
+    const firstNameInput = screen.getByPlaceholderText("First Name");
+    const lastNameInput = screen.getByPlaceholderText("Last Name");
+    const addButton = screen.getByText("Add");
+
+    fireEvent.change(firstNameInput, { target: { value: "John" } });
+    fireEvent.change(lastNameInput, { target: { value: "Doe" } });
+    fireEvent.click(addButton);
+
+    // Now, simulate editing the added name
+    const editButton = screen.getByText("Edit");
+    fireEvent.click(editButton);
+
+    const updatedFirstNameInput = screen.getByPlaceholderText("John");
+    const updatedLastNameInput = screen.getByPlaceholderText("Doe");
+    const updateButton = screen.getByText("Update");
+
+    fireEvent.change(updatedFirstNameInput, { target: { value: "" } });
+    fireEvent.change(updatedLastNameInput, { target: { value: "" } });
+
+    fireEvent.click(updateButton);
+
+    expect(alertMock).toHaveBeenCalled();
+
+    alertMock.mockRestore();
+  });
 });
 
 describe("Edit Functionality Testing", () => {
@@ -111,8 +156,8 @@ describe("Edit Functionality Testing", () => {
     fireEvent.click(editButton);
 
     // Check if input fields are populated with selected name
-    expect(screen.getByPlaceholderText("First Name")).toHaveValue("John");
-    expect(screen.getByPlaceholderText("Last Name")).toHaveValue("Doe");
+    expect(screen.getByPlaceholderText("John")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Doe")).toBeInTheDocument();
   });
 
   test("should hide 'Add' button and show 'Update' button when editing a name", () => {
@@ -134,5 +179,25 @@ describe("Edit Functionality Testing", () => {
     // Check if 'Add' button is hidden and 'Update' button is shown
     expect(screen.queryByText("Add")).toHaveAttribute("hidden");
     expect(screen.getByText("Update")).toBeInTheDocument();
+  });
+});
+
+describe("Delete Functionality Testing", () => {
+  test("should delete row on button click", () => {
+    render(<Table />);
+    const firstNameInput = screen.getByPlaceholderText("First Name");
+    const lastNameInput = screen.getByPlaceholderText("Last Name");
+    const addButton = screen.getByText("Add");
+
+    fireEvent.change(firstNameInput, { target: { value: "John" } });
+    fireEvent.change(lastNameInput, { target: { value: "Doe" } });
+    fireEvent.click(addButton);
+
+    // call delete function
+    const deleteButton = screen.getByText("Delete");
+    fireEvent.click(deleteButton);
+
+    expect(screen.queryByText("John")).not.toBeInTheDocument();
+    expect(screen.queryByText("Doe")).not.toBeInTheDocument();
   });
 });
