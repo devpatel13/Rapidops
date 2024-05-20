@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*Form*/
+.userform {
+  border: 1px solid #cbd0db;
+  padding: 32px;
+  width: 35%;
+  margin-top: 10%;
+
+  & h3 {
+    font-weight: bolder;
+    text-align: center;
+  }
+
+  & button {
+    margin: 16px 0px;
+  }
+
+  .form-group {
+    padding: 1% 0;
+  }
+}
