@@ -16,12 +16,6 @@ import App from "../App";
 // import Weather from "../Components/Weather";
 import Home from "../Pages/Home";
 
-// Mock the navigate function from react-router-dom
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useNavigate: () => jest.fn(),
-}));
-
 // Mock window.location properties
 const { location } = window;
 delete window.location;
@@ -112,24 +106,6 @@ describe("App Component", () => {
     );
     window.localStorage.clear();
   });
-
-  //   test("handles logout correctly", () => {
-  //     localStorage.setItem("loginas", "test@example.com");
-
-  //     render(
-  //       <MemoryRouter initialEntries={["/home"]}>
-  //         <Routes>
-  //           <Route path="/" element={<div>Login Page</div>} />
-  //           <Route path="/home" element={<App />} />
-  //         </Routes>
-  //       </MemoryRouter>
-  //     );
-
-  //     fireEvent.click(screen.getByRole("button", { name: /Logout/i }));
-
-  //     expect(localStorage.getItem("loginas")).toBeNull();
-  //     expect(screen.getByText("Login Page")).toBeInTheDocument();
-  //   });
 
   test("shows error message for invalid city name", async () => {
     localStorage.setItem("loginas", "test@example.com");
