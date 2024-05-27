@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SingleCompApproach from "./exercise/exercise2/SingleCompApproach";

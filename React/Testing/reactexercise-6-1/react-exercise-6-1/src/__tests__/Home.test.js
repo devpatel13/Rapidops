@@ -5,19 +5,10 @@ import {
   waitFor,
   cleanup,
 } from "@testing-library/react";
-import {
-  MemoryRouter,
-  Route,
-  Routes,
-  Router,
-  BrowserRouter,
-} from "react-router-dom";
-import App from "../App";
-// import Weather from "../Components/Weather";
+import { MemoryRouter } from "react-router-dom";
 import Home from "../Pages/Home";
 
 // Mock window.location properties
-const { location } = window;
 delete window.location;
 window.location = { pathname: "/home" };
 
@@ -67,7 +58,6 @@ describe("App Component", () => {
     jest.clearAllMocks();
   });
   afterEach(() => {
-    // localStorage.clear();
     cleanup();
   });
 
