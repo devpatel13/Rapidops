@@ -149,6 +149,59 @@ describe("DynamicForm Component", () => {
     expect(checkboxInput).toBeChecked();
   });
 
+  test("renders select field with options and changes value", () => {
+    const data = {
+      currentStep: 1,
+      steps: {
+        step: 1,
+        title: "Step 1",
+        description: "This is the first step",
+      },
+      fields: [
+        {
+          name: "dropdownField",
+          field_type: "select",
+          label: "Dropdown Field",
+          default_value: "",
+          placeholder: "Select an option",
+          options: ["Option 1", "Option 2", "Option 3"],
+        },
+      ],
+      isLastPage: false,
+    };
+
+    const setStepsCompleted = jest.fn();
+    render(<DynamicForm data={data} setStepsCompleted={setStepsCompleted} />);
+
+    // Check if the select field and its label are rendered
+    const selectFieldLabel = screen.getByLabelText("Dropdown Field");
+    expect(selectFieldLabel).toBeInTheDocument();
+
+    const selectField = screen.getByRole("combobox", {
+      name: "Dropdown Field",
+    });
+    expect(selectField).toBeInTheDocument();
+
+    // Check if the placeholder option is present
+    const placeholderOption = screen.getByText("Select an option");
+    expect(placeholderOption).toBeInTheDocument();
+
+    // Check if all the options are rendered
+    const option1 = screen.getByText("Option 1");
+    const option2 = screen.getByText("Option 2");
+    const option3 = screen.getByText("Option 3");
+
+    expect(option1).toBeInTheDocument();
+    expect(option2).toBeInTheDocument();
+    expect(option3).toBeInTheDocument();
+
+    // Simulate changing the value of the select field
+    fireEvent.change(selectField, { target: { value: "Option 2" } });
+
+    // Check if the value has been updated correctly
+    expect(selectField.value).toBe("Option 2");
+  });
+
   test("handles form submission with validation and regEx correctly", () => {
     const mockData = {
       steps: {
@@ -273,5 +326,37 @@ describe("DynamicForm Component", () => {
     render(<DynamicForm data={mockDataLastPage} />);
 
     expect(screen.getByText("Submit")).toBeInTheDocument();
+  });
+
+  test("renders Previous button and clicks it", () => {
+    const data = {
+      currentStep: 3,
+      steps: {
+        step: 3,
+        title: "Step 3",
+        description: "This is the second step",
+      },
+      fields: [
+        {
+          name: "field1",
+          field_type: "text",
+          label: "Field 1",
+          default_value: "",
+          placeholder: "Enter Field 1",
+        },
+      ],
+      isLastPage: false,
+    };
+
+    const setStepsCompleted = jest.fn();
+    render(<DynamicForm data={data} setStepsCompleted={setStepsCompleted} />);
+    const previousButton = screen.getByText("Previous");
+    expect(previousButton).toBeInTheDocument();
+
+    // Click the Previous button
+    fireEvent.click(previousButton);
+
+    // Ensure that the setStepsCompleted function is called with the correct argument
+    expect(setStepsCompleted).toHaveBeenCalledWith(data.currentStep - 2);
   });
 });

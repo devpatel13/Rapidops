@@ -154,7 +154,7 @@ const formData = {
 
         label: "Phone Number",
 
-        field_type: "tel",
+        field_type: "number",
 
         default_value: "",
 

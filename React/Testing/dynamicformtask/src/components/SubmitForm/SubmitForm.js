@@ -13,7 +13,7 @@ export default function SubmitForm() {
   }, []);
 
   return (
-    <div className="user-data-container">
+    <div className="user-data-container" data-testid="submitform-component">
       <h2>User Data</h2>
       <div className="data-container">
         {userData ? (

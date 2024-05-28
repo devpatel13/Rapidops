@@ -53,7 +53,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="header">
+      <div className="header" data-testid="home-component">
         <ProgressBar progressPercentage={progressPercentage} />
         <StepBar
           currentStep={stepsCompleted + 1}
