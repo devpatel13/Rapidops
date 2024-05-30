@@ -19,6 +19,8 @@
   "homepage": "https://github.com/Training-Rapidops/Devanshu-Patel#readme",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "mongoose": "^8.2.1"
+    "mongoose": "^8.2.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-filesize": "^10.0.0"
   }
 }
