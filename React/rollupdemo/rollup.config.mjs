@@ -7,10 +7,10 @@ import replace from "@rollup/plugin-replace";
 
 export default [
   {
-    input: "src/index.js",
+    input: ["src/index.js", "src/demo.js"],
     output: {
-      file: "public/bundle.js",
-      format: "iife",
+      dir: "build",
+      format: "es",
     },
     plugins: [
       external(),

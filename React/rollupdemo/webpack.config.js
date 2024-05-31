@@ -20,7 +20,7 @@ module.exports = {
     extensions: [".js", ".jsx"],
   },
   devServer: {
-    contentBase: path.join(__dirname, "public"), // Serve files from this directory
+    static: { directory: path.join(__dirname, "public") }, // Serve files from this directory
     port: 3000, // Port for the development server
     open: true, // Open the default web browser when the server starts
   },
