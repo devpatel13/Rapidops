@@ -7,11 +7,22 @@ import replace from "@rollup/plugin-replace";
 
 export default [
   {
-    input: ["src/index.js", "src/demo.js"],
-    output: {
-      dir: "build",
-      format: "es",
-    },
+    input: ["src/RenderAdd.js", "src/RenderSub.js"],
+    output: [
+      {
+        dir: "build/cjs",
+        format: "cjs",
+        sourcemap: true,
+        entryFileNames: "[name].js",
+      },
+      {
+        dir: "build/esm",
+        format: "esm",
+        sourcemap: true,
+        entryFileNames: "[name].js",
+      },
+    ],
+
     plugins: [
       external(),
       nodeResolve({ extensions: [".js", ".jsx"] }),
